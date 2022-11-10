@@ -1,57 +1,79 @@
-<script>
+<script lange="ts">
   import { Router, Route, navigate } from "svelte-routing";
   import { onMount } from "svelte";
+  import { SvelteToast } from "@zerodevx/svelte-toast";
   import { SiteAPI } from "./api";
+  import { isSetupStore, siteStore } from "./stores";
+  import { error, Loading, Menu, Navbar } from "./structure";
 
   // routes
   import {
+    Home,
     Login,
     Setup
   } from "./routes/index";
   
-  // check the user login to determine where they should go
-  import { isSetupStore, userStore } from "./stores";
+  // // check the site status
+  let loading = true;
 
-  let isSetup = false;
-  isSetupStore.subscribe(is => {
-    isSetup = is;
-  })
-
-  let user = null;
-  userStore.subscribe(u => {
-    user = u
-  });
-
+  // this can be cleaned up once we get the architecture sorted
   onMount(async () => {
     // if the site is already set up, we can skip the check
-    console.log(isSetup);
-    console.log(user);
-    if(!isSetup){
+    if(!$isSetupStore){
       try{
         const result = await SiteAPI.getSiteSetupInfo();
-        console.log(result.body);
         if(result.body.data.configured){
-          isSetupStore.set(true);
+          $isSetupStore = true;
+          localStorage.setItem("isSetup", "true");
+          loading = false;
         } else {
+          loading = false;
           navigate("/setup", {replace: true});
         }
 
       }catch(err){
-        console.log(err);
+        loading = false;
         navigate("/setup", {replace: true});
       }
     } else {
-      // site is setup, so let's check if they are logged in
+      // site is setup, so let's check if we need to fetch the metadata
+      if(!$siteStore){
+        try{
+          const result = await SiteAPI.getSiteInfo();
+          siteStore.set(result.body.data);
+          localStorage.setItem("site", JSON.stringify(result.body.data));
+        }catch(err){
+          return error("Error", "Site is configured but unreachable.");
+        }
+      }
+      loading = false;
     }
   })
   
 
 </script>
-
-<Router>
-
-  <Route path="/" />
-  <Route path="/setup" component={Setup} />
-  <Route path="/login" component={Login} />
-  
-</Router>
+<div class="app">
+  <SvelteToast />
+  <Menu isOpen={true} />
+  <div class="row">
+    <div class="col-10 offset-1">
+      <div class="row">
+        <div class="col-12">
+          <Router>
+            <Navbar />
+            {#if loading}
+              <div style="text-align: center; height: 100%; margin-top: 10%">
+                <Loading />
+              </div>
+            {:else}
+              <Route path="/" component={Home} />
+              <Route path="/setup" component={Setup} />
+              <Route path="/login" component={Login} />
+            {/if}
+            
+          </Router>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

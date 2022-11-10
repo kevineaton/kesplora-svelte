@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { Loading } from "./";
+  import  Loading  from "./Loading.svelte";
 
   export let loading: boolean = false;
   export let ignoreAuth: boolean = false;

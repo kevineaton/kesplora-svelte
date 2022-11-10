@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Card, CardHeader, CardTitle, CardBody } from "sveltestrap";
-  import { Loading } from "./";
+  import Loading  from "./Loading.svelte";
 
   export let title = "";
   export let loading = false;
