@@ -5,19 +5,19 @@
   import { Card, Screen, error, success } from "../structure/index";
   import MarkdownEditor from "../structure/MarkdownEditor.svelte";
 
-  let shortName = "kevin";
-  let name = "Kevin Eaton Research";
-  let description = "# Kevin Research!\nNice!";
-  let domain = "kesplora.com";
-  let code = "]0n*$UFl@Y{jYa[#0#J]Npk{2#4r^zpJ";
-  let title = "Dr.";
-  let firstName = "Kevin";
-  let lastName = "Eaton";
-  let email = "kevinhowardeaton@gmail.com";
-  let emailConfirm = "kevinhowardeaton@gmail.com";
-  let password = "password";
-  let passwordConfirm = "password";
-  let siteTechnicalContact = "support"
+  let shortName = "";
+  let name = "";
+  let description = "";
+  let domain = "";
+  let code = "";
+  let title = "";
+  let firstName = "";
+  let lastName = "";
+  let email = "";
+  let emailConfirm = "";
+  let password = "";
+  let passwordConfirm = "";
+  let siteTechnicalContact = ""
 
   const save = async () => {
     // do some basic checks first
