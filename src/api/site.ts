@@ -21,4 +21,14 @@ export class SiteAPI {
   public getSiteSetupInfo(data: any = {}, options: any = {}){
     return makeCall("GET", "/setup", data, options);
   }
+
+  /**
+   * Attempts to configure a site for first use
+   * @param data 
+   * @param options 
+   * @returns 
+   */
+  public setSiteSetupInfo(data: any = {}, options: any = {}){
+    return makeCall("POST", "/setup", data, options);
+  }
 }

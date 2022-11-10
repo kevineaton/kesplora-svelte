@@ -1,7 +1,7 @@
 <script lang="ts">
   import Screen from "../structure/Screen.svelte";
   import { userStore } from "../stores/users";
-    import { SiteAPI, UsersAPI } from "../api";
+  import { SiteAPI, UsersAPI } from "../api";
 
   let foundUser = null;
   userStore.subscribe(u => {
