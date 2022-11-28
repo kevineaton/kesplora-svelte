@@ -7,9 +7,10 @@
     site = s;
   })
 
-  console.log(site);
   const name = site && site.name ? site.name : "Welcome!";
   const data = site && site.description ? site.description : "";
+
+  // TODO: get the projects list based upon preferences
 </script>
 
 <h1>{name}</h1>
