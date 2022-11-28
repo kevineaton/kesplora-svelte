@@ -11,6 +11,7 @@ const errorTheme = {
 
 export const error = (title: string = "Error", body: string = "There was an error.", options: SvelteToastOptions = {}) => {
   options.theme = errorTheme;
+  title = title === "" ? "Uh oh!" : title;
   toast.push(`<strong>${title}</strong><br />${body}<br />`, options);
 }
 
@@ -23,6 +24,7 @@ const successTheme = {
 
 export const success = (title: string = "Success", body: string = "", options: SvelteToastOptions = {}) => {
   options.theme = successTheme;
+  title = title === "" ? "Success!" : title;
   toast.push(`<strong>${title}</strong><br />${body}<br />`, options);
 }
 
@@ -35,5 +37,6 @@ const warningTheme = {
 
 export const warning = (title: string = "Warning", body: string = "", options: SvelteToastOptions = {}) => {
   options.theme = warningTheme;
+  title = title === "" ? "Warning!" : title;
   toast.push(`<strong>${title}</strong><br />${body}<br />`, options);
 }

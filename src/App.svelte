@@ -10,6 +10,8 @@
   import {
     Home,
     Login,
+    Modules,
+    Projects,
     Setup
   } from "./routes/index";
   
@@ -25,6 +27,11 @@
         if(result.body.data.configured){
           $isSetupStore = true;
           localStorage.setItem("isSetup", "true");
+          // we don't have the site in localstorage, so we need to get it
+          const siteResult = await SiteAPI.getSiteInfo();
+          siteStore.set(siteResult.body.data);
+          localStorage.setItem("site", JSON.stringify(siteResult.body.data));
+
           loading = false;
         } else {
           loading = false;
@@ -49,17 +56,16 @@
       loading = false;
     }
   })
-  
-
 </script>
+
 <div class="app">
   <SvelteToast />
-  <Menu isOpen={true} />
   <div class="row">
     <div class="col-10 offset-1">
       <div class="row">
         <div class="col-12">
           <Router>
+            <Menu isOpen={true} />
             <Navbar />
             {#if loading}
               <div style="text-align: center; height: 100%; margin-top: 10%">
@@ -69,6 +75,8 @@
               <Route path="/" component={Home} />
               <Route path="/setup" component={Setup} />
               <Route path="/login" component={Login} />
+              <Route path="/admin/projects" component={Projects} />
+              <Route path="/admin/modules" component={Modules} />
             {/if}
             
           </Router>

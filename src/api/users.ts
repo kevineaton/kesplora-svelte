@@ -16,6 +16,6 @@ export class UserAPI {
       email,
       password,
     }
-    return makeCall("POST", "users/login", data, options);
+    return makeCall("POST", "login", data, options);
   }
 }
