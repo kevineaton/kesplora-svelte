@@ -4,16 +4,16 @@ export class UserAPI {
 
   /**
    * Login attempts to login a user
-   * @param email 
+   * @param login: either the email or the participant code 
    * @param password 
    * @param otherData 
    * @param options 
    * @returns 
    */
-  public login(email: string, password: string, otherData: any = {}, options: any = {}){
+  public login(login: string, password: string, otherData: any = {}, options: any = {}){
     const data = {
       ...otherData,
-      email,
+      login,
       password,
     }
     return makeCall("POST", "login", data, options);

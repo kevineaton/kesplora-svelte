@@ -8,7 +8,6 @@
   // if the user is logged in, if they are an admin, we show the admin options
 
   // otherwise, just show logout
-  console.log($userStore)
 
   const toggleMenu = () => {
     if($userStore){
