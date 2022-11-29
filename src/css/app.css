@@ -28,6 +28,15 @@
   margin-bottom: 10px;
 }
 
+.row-header {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.row-dropper {
+  min-height: 20px;
+}
+
 .form-group {
   margin-top: 10px;
 }
@@ -55,12 +64,6 @@ label {
 
 .btn-block {
   width: 100%;
-}
-
-/** Markdown **/
-
-.bytemd-tippy-right:last-child {
-  display:none;
 }
 
 /** Nav **/

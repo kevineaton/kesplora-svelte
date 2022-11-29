@@ -57,6 +57,20 @@ export class ModulesAPI {
   }
 
   /**
+   * Deletes a module
+   * @param moduleId 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public deleteModule(moduleId: number, otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("DELETE", `modules/${moduleId}`, data, options);
+  }
+
+  /**
    * Links a module and a project. Admins only.
    * @param projectId 
    * @param moduleId 

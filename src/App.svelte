@@ -8,9 +8,11 @@
 
   // routes
   import {
+    Blocks,
     Home,
     Login,
     Modules,
+    ModuleBlocks,
     Projects,
     Setup
   } from "./routes/index";
@@ -77,6 +79,8 @@
               <Route path="/login" component={Login} />
               <Route path="/admin/projects" component={Projects} />
               <Route path="/admin/modules" component={Modules} />
+              <Route path="/admin/modules/:moduleId/blocks" component={ModuleBlocks} let:params />
+              <Route path="/admin/blocks" component={Blocks} />
             {/if}
             
           </Router>
