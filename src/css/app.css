@@ -35,6 +35,8 @@
 
 .row-dropper {
   min-height: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
 }
 
 .form-group {
@@ -69,4 +71,15 @@ label {
 /** Nav **/
 .nav-link {
   color: white;
+}
+
+
+.drop-target-level-1 {
+  outline: rgba(255, 255, 102, .7) dashed 2px !important;
+}
+
+.drop-target-level-2 {
+  outline: rgba(76, 61, 233, 0.7) dashed 2px !important;
+  margin-left: 1px;
+  margin-right: 1px;
 }

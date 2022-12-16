@@ -1,13 +1,24 @@
 <script lang="ts">
-  import { Link } from "svelte-routing";
+  import { Link, navigate } from "svelte-routing";
   import { Nav, Navbar, NavbarBrand, NavItem } from "sveltestrap";
+    import { UsersAPI } from "../api";
   import { menuOpenStore, siteStore, userStore } from "../stores";
 
-  // if the user is not logged in, all we want to show is the login button
-  
-  // if the user is logged in, if they are an admin, we show the admin options
+  let logoutLoading = false;
 
-  // otherwise, just show logout
+  const logout = async () => {
+    try{
+      logoutLoading = true;
+      await UsersAPI.logout();
+      window.localStorage.clear();
+      $userStore = null;
+      navigate("/", {replace: true});
+    }catch(err){
+      // this would be very weird...
+    } finally{
+      logoutLoading = false;
+    }    
+  }
 
   const toggleMenu = () => {
     if($userStore){
@@ -30,7 +41,7 @@
         </NavItem>
       {/if}
       <NavItem>
-        <button class="btn btn-link nav-link">Logout</button>
+        <button class="btn btn-link nav-link" on:click={logout}>Logout</button>
       </NavItem>
     {:else}
       <NavItem>

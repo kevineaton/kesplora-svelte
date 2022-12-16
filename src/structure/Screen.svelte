@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import  Loading  from "./Loading.svelte";
+  import { menuOpenStore } from "../stores";
 
   export let loading: boolean = false;
   export let ignoreAuth: boolean = false;
@@ -8,6 +9,7 @@
 
   // if ignore auth isn't true, we need to check the user
   onMount(async () => {
+    $menuOpenStore = false;
     if(!ignoreAuth){
       
       // now refresh

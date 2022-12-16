@@ -1,9 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { Icon, Modal, ModalBody, ModalFooter, ModalHeader } from "sveltestrap";
-  import { BlocksAPI, ModulesAPI, ProjectsAPI } from "../api";
+  import { BlocksAPI } from "../api";
   import { Card, error, Screen, success, warning } from "../structure";
-  import MarkdownEditor from "../structure/MarkdownEditor.svelte";
   import { BlockExternalEdit, BlockPresentationEdit, BlockTextEdit } from "./BlockContent";
   
   export const location: any = null;
@@ -76,7 +75,6 @@
       warning("Warning", "We could not find the content for that block. It may no longer be available. If you continue to save, the content will be updated and replaced.")
     }
     finally{
-      console.log(selectedBlock);
       loading = false;
       showEditModal = true;
     }

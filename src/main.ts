@@ -1,4 +1,4 @@
-import './css/volt.css';
+// import './css/volt.css';
 import './css/app.css';
 import App from './App.svelte';
 

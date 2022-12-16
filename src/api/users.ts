@@ -18,4 +18,17 @@ export class UserAPI {
     }
     return makeCall("POST", "login", data, options);
   }
+
+  /**
+   * Log out the user
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public logout(otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("POST", "logout", data, options);
+  }
 }

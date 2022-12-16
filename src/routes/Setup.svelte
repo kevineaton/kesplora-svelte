@@ -88,14 +88,12 @@
 
     try{
       const result = await SiteAPI.setSiteSetupInfo(data);
-      console.log(result.body.data);
       isSetupStore.set(true);
       const site = result.body.data.site;
       siteStore.set(site);
       success("Success!", "Site is configured, now login to get started!")
       navigate("/", {replace: true });
     }catch(err){
-      console.log(err);
       let errorMessage = "Unknown";
       if(err.body && err.body && err.body.error){
         errorMessage = errorCodeToDisplayString(err.body.error);
