@@ -9,8 +9,15 @@
   export const location: any = null;
   
   let loading = false;
+  let projectLoading = false;
   let projects: any[] = [];
   let selectedProject: any = null;
+  let consentForm: any = {
+    projectId: 0,
+    contentInMarkdown: "",
+    contactInformationDisplay: "",
+    institutionInformationDisplay: "",
+  };
 
   let showNewProjectModal = false;
   let newProjectName = "";
@@ -20,6 +27,7 @@
 
   let showProjectShortDescriptionEditModal = false;
   let showProjectFullDescriptionEditModal = false;
+  let showProjectConsentFormModal = false;
 
   onMount(async () => {
     try{
@@ -40,6 +48,15 @@
 
   const toggleProjectFullDescriptionModal = () => {
     showProjectFullDescriptionEditModal = !showProjectFullDescriptionEditModal;
+  }
+
+  const toggleProjectConsentFormModal = () => {
+    showProjectConsentFormModal = !showProjectConsentFormModal;
+  }
+
+  const handleConsentFormUpdates = (field: string, e: any) => {
+    consentForm[field] = e.target.value;
+    consentForm = consentForm;
   }
 
   const createProject = async () => {
@@ -64,8 +81,19 @@
     }
   }
 
-  const selectProject = (newSelectedProject: any) => {
+  const selectProject = async (newSelectedProject: any) => {
     selectedProject = newSelectedProject;
+    selectedProject.hasParticipants = selectedProject.participantCount > 0;
+    // we need to get the consent form
+    projectLoading = true;
+    try{
+      const result = await ProjectsAPI.getProjectConsentForm(selectedProject.id);
+      consentForm = result.body.data;
+    }catch(err){
+      // fail silently, in case there simply isn't one yet
+    }finally {
+      projectLoading = false;
+    }
   }
 
   const saveProject = async () => {
@@ -77,6 +105,7 @@
     selectedProject.participantMinimumAge = parseInt(selectedProject.participantMinimumAge);
     try{
       await ProjectsAPI.updateProject(selectedProject.id, selectedProject);
+      await ProjectsAPI.saveProjectConsentForm(selectedProject.id, consentForm);
       success("", "Project saved!");
     }catch(err){
       error("", "Could not save that project. Please try again.")
@@ -84,6 +113,7 @@
       loading = false;
     }
   }
+
 </script>
 
 <Screen>
@@ -117,10 +147,15 @@
     </div>
     <div class="col-5">
       {#if selectedProject !== null}
-        <Card title={`Editing ${selectedProject.name}`} {loading}>
+        <Card title={`Editing ${selectedProject.name}`} loading={projectLoading}>
+          <div class="form-group">
+            {#if selectedProject.hasParticipants}
+              <strong class="text-warning">Warning:</strong> Project currently has {selectedProject.participantCount} participant(s). Some fields can no longer be changed.
+            {/if}
+          </div>
           <div class="form-group">
             <label for="selectedProject.name}">Project Name</label>
-            <input type="text" id="selectedProject.name}" bind:value={selectedProject.name} class="form-control" />
+            <input type="text" id="selectedProject.name}" bind:value={selectedProject.name} class="form-control" disabled={selectedProject.hasParticipants} />
           </div>
           <div class="form-group">
             <label for="selectedProject.shortCode">Project Signup Code</label>
@@ -165,7 +200,7 @@
           </div>
           <div class="form-group">
             <label for="selectedProject.participantMinimumAge">Minimum Age</label>
-            <input type="text" id="selectedProject.participantMinimumAge" bind:value={selectedProject.participantMinimumAge} class="form-control" />
+            <input type="text" id="selectedProject.participantMinimumAge" bind:value={selectedProject.participantMinimumAge} class="form-control" disabled={selectedProject.hasParticipants} />
           </div>
           <div class="form-group">
             <button class="btn btn-block btn-primary" on:click={toggleProjectFullDescriptionModal}>Edit Full Description</button>
@@ -174,10 +209,17 @@
             <button class="btn btn-block btn-primary" on:click={toggleProjectShortDescriptionModal}>Edit Short Description</button>
           </div>
           <div class="form-group">
+            <button class="btn btn-block btn-primary" on:click={toggleProjectConsentFormModal} disabled={selectedProject.hasParticipants} >Edit Consent Form</button>
+          </div>
+          <div class="form-group">
             <button class="btn btn-block btn-primary" on:click={saveProject}>Save Changes</button>
           </div>
           <div class="form-group">
-            <Link to={`/admin/projects/${selectedProject.id}/flow`} class="btn btn-block btn-primary">Manage Modules</Link>
+            {#if selectedProject.hasParticipants}
+              <button class="btn btn-block btn-primary" disabled={true}>Manage Modules</button>
+            {:else}
+              <Link to={`/admin/projects/${selectedProject.id}/flow`} class="btn btn-block btn-primary">Manage Modules</Link>
+            {/if}
           </div>
         </Card>
       {/if}
@@ -234,6 +276,36 @@
     </ModalBody>
     <ModalFooter>
       <button class="btn btn-block btn-primary" on:click={toggleProjectFullDescriptionModal}>Done</button>
+    </ModalFooter>
+  </Modal>
+
+
+  <Modal isOpen={showProjectConsentFormModal} toggle={toggleProjectConsentFormModal} fullscreen={true}>
+    <ModalHeader toggle={toggleProjectConsentFormModal}>Consent Form</ModalHeader>
+    <ModalBody>
+      <div class="row">
+        <div class="col-12">
+          <label for="consent.contentInMarkdown">Primary Content</label>
+          <MarkdownEditor content={consentForm.contentInMarkdown} mode="edit" handleChange={(e) => {handleConsentFormUpdates("contentInMarkdown", e)}}  />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <label for="consent.contactInformationDisplay">Contact Information</label>
+          <span class="small">This will be appended under the primary content.</span>
+          <MarkdownEditor content={consentForm.contactInformationDisplay} mode="edit" handleChange={(e) => {handleConsentFormUpdates("contactInformationDisplay", e)}}  />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <label for="consent.institutionInformationDisplay">Institutional Information</label>
+          <span class="small">This will be appended under the contact information.</span>
+          <MarkdownEditor content={consentForm.institutionInformationDisplay} mode="edit" handleChange={(e) => {handleConsentFormUpdates("institutionInformationDisplay", e)}} />
+        </div>
+      </div>
+    </ModalBody>
+    <ModalFooter>
+      <button class="btn btn-block btn-primary" on:click={toggleProjectConsentFormModal}>Done</button>
     </ModalFooter>
   </Modal>
 </Screen>

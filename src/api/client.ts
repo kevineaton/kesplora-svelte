@@ -74,7 +74,7 @@ export function makeCall(method: string, endpoint: string, data: any = {}, optio
       const refreshData = {};
       const refreshConfig: any = {
         method: "POST",
-        url: makeUrl(`/users/refresh`),
+        url: makeUrl(`/me/refresh`),
         timeout: 1000,
         headers: {},
         params: {},

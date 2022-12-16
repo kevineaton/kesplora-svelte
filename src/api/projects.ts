@@ -69,4 +69,46 @@ export class ProjectsAPI {
     }
     return makeCall("GET", `projects/${projectId}/flow`, data, options);
   }
+
+  /**
+   * Deletes the project's flow
+   * @param projectId 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public deleteProjectFlow(projectId: number, otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("DELETE", `projects/${projectId}/flow`, data, options);
+  }
+
+  /**
+   * Gets the consent form for a project
+   * @param projectId 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public getProjectConsentForm(projectId: number, otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("GET", `projects/${projectId}/consent`, data, options);
+  }
+
+  /**
+   * Saves the project's consent form
+   * @param projectId 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public saveProjectConsentForm(projectId: number, otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("POST", `projects/${projectId}/consent`, data, options);
+  }
 }

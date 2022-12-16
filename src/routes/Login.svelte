@@ -1,10 +1,10 @@
 <script lang="ts">
   import Screen from "../structure/Screen.svelte";
   import { userStore } from "../stores/users";
-  import { SiteAPI, UsersAPI } from "../api";
-    import Card from "../structure/Card.svelte";
-    import { navigate } from "svelte-routing";
-    import { error } from "../structure";
+  import { UsersAPI } from "../api";
+  import Card from "../structure/Card.svelte";
+  import { navigate } from "svelte-routing";
+  import { error } from "../structure";
 
 
   let email: string = "";
@@ -33,9 +33,17 @@
       </div>
       <div class="col-4">
         <Card title="Login">
-          <input bind:value={email} type="email" class="form-control" placeholder="Email or Participation Code" />
-          <input bind:value={password} type="password" class="form-control" placeholder="Password" />
-          <button class="btn btn-block btn-primary" on:click|preventDefault={login}>Login</button>
+          <div class="form-group">
+            <label for="email">Email or Participation Code</label>
+            <input bind:value={email} id="email" type="email" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input bind:value={password} id="password" type="password" class="form-control" placeholder="Password" />
+          </div>
+          <div class="form-group">
+            <button class="btn btn-block btn-primary" on:click|preventDefault={login}>Login</button>
+          </div>
         </Card>
       </div>
     </div>

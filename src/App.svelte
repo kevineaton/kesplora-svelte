@@ -14,6 +14,7 @@
     Modules,
     ModuleBlocks,
     Projects,
+    ProjectFlowEditor,
     Setup
   } from "./routes/index";
   
@@ -78,6 +79,7 @@
               <Route path="/setup" component={Setup} />
               <Route path="/login" component={Login} />
               <Route path="/admin/projects" component={Projects} />
+              <Route path="/admin/projects/:projectId/flow" component={ProjectFlowEditor} />
               <Route path="/admin/modules" component={Modules} />
               <Route path="/admin/modules/:moduleId/blocks" component={ModuleBlocks} let:params />
               <Route path="/admin/blocks" component={Blocks} />
