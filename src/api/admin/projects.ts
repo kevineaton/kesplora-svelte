@@ -1,4 +1,4 @@
-import { makeCall } from "./client";
+import { makeCall } from "../client";
 
 export class ProjectsAPI {
 
@@ -12,7 +12,7 @@ export class ProjectsAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("GET", "projects", data, options);
+    return makeCall("GET", "admin/projects", data, options);
   }
   
   /**
@@ -25,7 +25,7 @@ export class ProjectsAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("POST", "projects", data, options);
+    return makeCall("POST", "admin/projects", data, options);
   }
   
   /**
@@ -39,7 +39,7 @@ export class ProjectsAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("GET", `projects/${projectId}`, data, options);
+    return makeCall("GET", `admin/projects/${projectId}`, data, options);
   }
   
   /**
@@ -53,7 +53,7 @@ export class ProjectsAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("PATCH", `projects/${projectId}`, data, options);
+    return makeCall("PATCH", `admin/projects/${projectId}`, data, options);
   }
 
   /**
@@ -67,7 +67,7 @@ export class ProjectsAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("GET", `projects/${projectId}/flow`, data, options);
+    return makeCall("GET", `admin/projects/${projectId}/flow`, data, options);
   }
 
   /**
@@ -81,7 +81,7 @@ export class ProjectsAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("DELETE", `projects/${projectId}/flow`, data, options);
+    return makeCall("DELETE", `admin/projects/${projectId}/flow`, data, options);
   }
 
   /**
@@ -95,7 +95,7 @@ export class ProjectsAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("GET", `projects/${projectId}/consent`, data, options);
+    return makeCall("GET", `admin/projects/${projectId}/consent`, data, options);
   }
 
   /**
@@ -109,6 +109,6 @@ export class ProjectsAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("POST", `projects/${projectId}/consent`, data, options);
+    return makeCall("POST", `admin/projects/${projectId}/consent`, data, options);
   }
 }

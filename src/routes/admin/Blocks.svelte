@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { Icon, Modal, ModalBody, ModalFooter, ModalHeader } from "sveltestrap";
-  import { BlocksAPI } from "../api";
-  import { Card, error, Screen, success, warning } from "../structure";
+  import { BlocksAPI } from "../../api/admin";
+  import { Card, error, Screen, success, warning } from "../../structure";
   import { BlockExternalEdit, BlockPresentationEdit, BlockTextEdit } from "./BlockContent";
   
   export const location: any = null;
@@ -57,6 +57,11 @@
       const result = await BlocksAPI.createBlock(newBlockType, newBlock);
       blocks = [result.body.data, ...blocks];
       showNewBlockModal = false;
+      newBlock = {
+        name: "",
+        summary: "",
+        content: {},
+      }
       success("", "Block saved! It is at the top of the list for you.");
     }catch(err){
       error("", "Could not create that block. Check your data and try again!");
@@ -66,10 +71,9 @@
   }
 
   const selectBlock = async (newSelectedBlock: any) => {
-    selectedBlock = newSelectedBlock;
     // we need to GET the data, since the large get doesn't get all the content
     try {
-      const result = await BlocksAPI.getBlock(selectedBlock.id);
+      const result = await BlocksAPI.getBlock(newSelectedBlock.id);
       selectedBlock = result.body.data;
     }catch(err){
       warning("Warning", "We could not find the content for that block. It may no longer be available. If you continue to save, the content will be updated and replaced.")
@@ -212,7 +216,7 @@
         <div class="col-6">
           <div class="form-group">
             <label for="newBlock.summary">Summary</label>
-            <textarea type="text" id="newBlock.summary" bind:value={newBlock.summary} class="form-control" />
+            <textarea id="newBlock.summary" bind:value={newBlock.summary} class="form-control" />
           </div>
         </div>
       </div>
@@ -258,17 +262,17 @@
         <div class="col-6">
           <div class="form-group">
             <label for="selectedBlock.summary">Summary</label>
-            <textarea type="text" id="selectedBlock.summary" bind:value={selectedBlock.summary} class="form-control" />
+            <textarea id="selectedBlock.summary" bind:value={selectedBlock.summary} class="form-control" />
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
-          {#if newBlockType === "text"}
+          {#if selectedBlock.blockType === "text"}
             <BlockTextEdit content={selectedBlock.content}/>
-          {:else if newBlockType === "external"}
+          {:else if selectedBlock.blockType === "external"}
             <BlockExternalEdit content={newBlock.content}/>
-          {:else if newBlockType === "presentation"}
+          {:else if selectedBlock.blockType === "presentation"}
             <BlockPresentationEdit content={newBlock.content}/>
           {/if}
         </div>

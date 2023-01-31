@@ -2,9 +2,9 @@
   import { onMount } from "svelte";
   import { Link } from "svelte-routing";
   import { Icon, Modal, ModalBody, ModalFooter, ModalHeader } from "sveltestrap";
-  import { ModulesAPI, ProjectsAPI } from "../api";
-  import { Card, error, Screen, success } from "../structure";
-  import MarkdownEditor from "../structure/MarkdownEditor.svelte";
+  import { ModulesAPI } from "../../api/admin";
+  import { Card, error, Screen, success } from "../../structure";
+  import MarkdownEditor from "../../structure/MarkdownEditor.svelte";
 
   export const location: any = null;
   
@@ -32,6 +32,10 @@
 
   const toggleDescriptionModal = () => {
     showDescriptionEditModal = !showDescriptionEditModal;
+  }
+
+  const updateDescription = (content: string) => {
+    selectedModule.description = content;
   }
 
   const createModule = async () => {
@@ -149,7 +153,7 @@
   <Modal isOpen={showDescriptionEditModal} toggle={toggleDescriptionModal} fullscreen={true}>
     <ModalHeader toggle={toggleDescriptionModal}>Editing Description</ModalHeader>
     <ModalBody>
-      <MarkdownEditor content={selectedModule.description} mode="edit" />
+      <MarkdownEditor content={selectedModule.description} mode="edit" handleChange={(e) => {updateDescription(e.target.value)}} />
     </ModalBody>
     <ModalFooter>
       <button class="btn btn-block btn-primary" on:click={toggleDescriptionModal}>Done</button>

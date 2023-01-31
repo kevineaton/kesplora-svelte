@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { Card } from "../../structure";
-  import { BlockContentViewerExternal, BlockContentViewerPresentation, BlockContentViewerText } from "./";
-
-
+  import { Card } from ".";
+  import { BlockContentViewerExternal, BlockContentViewerPresentation, BlockContentViewerText } from "./BlockContent/index";
+  
   export let block;
   
 </script>

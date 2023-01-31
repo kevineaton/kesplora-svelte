@@ -11,6 +11,9 @@
     isOpen = !isOpen;
     menuOpenStore.set(isOpen); 
   };
+  if(!$siteStore){
+    $siteStore = {name: "Research"};
+  }
   const header = $userStore ? `${$siteStore.name} - ${$userStore.firstName} ${$userStore.lastName}` : "Admin";
 </script>
 

@@ -3,9 +3,10 @@
   import { Icon, Modal, ModalHeader, ModalBody, ModalFooter } from "sveltestrap";
   import { flip } from "svelte/animate";
   import { dndzone } from "svelte-dnd-action";
-  import { BlocksAPI, ModulesAPI } from "../api";
-  import { Card, error, Screen, success } from "../structure";
-  import BlockContentViewer from "./BlockContent/BlockContentViewer.svelte";
+  import { BlocksAPI, ModulesAPI } from "../../api/admin";
+  import { Card, error, Screen, success } from "../../structure";
+  import BlockContentViewer from "../../structure/BlockContentViewer.svelte";
+    import { Link } from "svelte-routing";
 
   export let moduleId;
 
@@ -142,7 +143,18 @@
     <div class="col-5">
       <Card title="All Available Blocks">
         {#if allBlocks.length === 0}
-          <strong>None!</strong>
+          <div>
+            <div class="row">
+              <div class="col-12">
+                <strong>None!</strong>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <Link to="/admin/blocks" class="btn btn-primary btn-block">Create</Link>
+              </div>
+            </div>
+          </div>
         {/if}
         <div id="blocks-all" use:dndzone="{{items:allBlocks, flipDurationMs}}" on:consider={handleDNDConsiderAll} on:finalize={handleDNDFinalizeAll}>
           {#each allBlocks as block (block.id)}

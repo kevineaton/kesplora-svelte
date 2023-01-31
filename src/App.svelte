@@ -15,7 +15,10 @@
     ModuleBlocks,
     Projects,
     ProjectFlowEditor,
-    Setup
+    Setup,
+
+    ProjectSummary,
+    ProjectFlow,
   } from "./routes/index";
   
   // // check the site status
@@ -83,6 +86,9 @@
               <Route path="/admin/modules" component={Modules} />
               <Route path="/admin/modules/:moduleId/blocks" component={ModuleBlocks} let:params />
               <Route path="/admin/blocks" component={Blocks} />
+
+              <Route path="/participant/projects/:projectId" component={ProjectSummary} />
+              <Route path="/participant/projects/:projectId/flow" component={ProjectFlow} />
             {/if}
             
           </Router>

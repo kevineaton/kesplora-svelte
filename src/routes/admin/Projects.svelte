@@ -2,9 +2,9 @@
   import { onMount } from "svelte";
   import { Link } from "svelte-routing";
   import { Icon, Modal, ModalBody, ModalFooter, ModalHeader } from "sveltestrap";
-  import { ProjectsAPI } from "../api";
-  import { Card, error, Screen, success } from "../structure";
-  import MarkdownEditor from "../structure/MarkdownEditor.svelte";
+  import { ProjectsAPI } from "../../api/admin";
+  import { Card, error, Screen, success } from "../../structure";
+  import MarkdownEditor from "../../structure/MarkdownEditor.svelte";
 
   export const location: any = null;
   
@@ -54,9 +54,14 @@
     showProjectConsentFormModal = !showProjectConsentFormModal;
   }
 
-  const handleConsentFormUpdates = (field: string, e: any) => {
-    consentForm[field] = e.target.value;
+  const handleConsentFormUpdates = (field: string, val: string) => {
+    consentForm[field] = val;
     consentForm = consentForm;
+  }
+
+  const handleProjectFieldChanges = (field: string, val: string) => {
+    selectedProject[field] = val;
+    selectedProject = selectedProject;
   }
 
   const createProject = async () => {
@@ -74,6 +79,7 @@
       const result = await ProjectsAPI.createProject(data);
       projects.push(result.body.data);
       selectProject(result.body.data);
+      showNewProjectModal = false;
     }catch(err){
       error("", "Could not create that project. Check your data and try again!");
     } finally {
@@ -262,7 +268,7 @@
   <Modal isOpen={showProjectShortDescriptionEditModal} toggle={toggleProjectShortDescriptionModal} fullscreen={true}>
     <ModalHeader toggle={toggleProjectShortDescriptionModal}>Editing Short Description</ModalHeader>
     <ModalBody>
-      <MarkdownEditor content={selectedProject.shortDescription} mode="edit" />
+      <MarkdownEditor content={selectedProject.shortDescription} handleChange={(e) => {handleProjectFieldChanges("shortDescription", e.target.value)}} mode="edit" />
     </ModalBody>
     <ModalFooter>
       <button class="btn btn-block btn-primary" on:click={toggleProjectShortDescriptionModal}>Done</button>
@@ -272,7 +278,7 @@
   <Modal isOpen={showProjectFullDescriptionEditModal} toggle={toggleProjectFullDescriptionModal} fullscreen={true}>
     <ModalHeader toggle={toggleProjectFullDescriptionModal}>Editing Full Description</ModalHeader>
     <ModalBody>
-      <MarkdownEditor content={selectedProject.description} mode="edit" />
+      <MarkdownEditor content={selectedProject.description} handleChange={(e) => {handleProjectFieldChanges("description", e.target.value)}} mode="edit" />
     </ModalBody>
     <ModalFooter>
       <button class="btn btn-block btn-primary" on:click={toggleProjectFullDescriptionModal}>Done</button>
@@ -286,21 +292,21 @@
       <div class="row">
         <div class="col-12">
           <label for="consent.contentInMarkdown">Primary Content</label>
-          <MarkdownEditor content={consentForm.contentInMarkdown} mode="edit" handleChange={(e) => {handleConsentFormUpdates("contentInMarkdown", e)}}  />
+          <MarkdownEditor content={consentForm.contentInMarkdown} mode="edit" handleChange={(e) => {handleConsentFormUpdates("contentInMarkdown", e.target.value)}}  />
         </div>
       </div>
       <div class="row">
         <div class="col-12">
           <label for="consent.contactInformationDisplay">Contact Information</label>
           <span class="small">This will be appended under the primary content.</span>
-          <MarkdownEditor content={consentForm.contactInformationDisplay} mode="edit" handleChange={(e) => {handleConsentFormUpdates("contactInformationDisplay", e)}}  />
+          <MarkdownEditor content={consentForm.contactInformationDisplay} mode="edit" handleChange={(e) => {handleConsentFormUpdates("contactInformationDisplay", e.target.value)}}  />
         </div>
       </div>
       <div class="row">
         <div class="col-12">
           <label for="consent.institutionInformationDisplay">Institutional Information</label>
           <span class="small">This will be appended under the contact information.</span>
-          <MarkdownEditor content={consentForm.institutionInformationDisplay} mode="edit" handleChange={(e) => {handleConsentFormUpdates("institutionInformationDisplay", e)}} />
+          <MarkdownEditor content={consentForm.institutionInformationDisplay} mode="edit" handleChange={(e) => {handleConsentFormUpdates("institutionInformationDisplay", e.target.value)}} />
         </div>
       </div>
     </ModalBody>

@@ -1,4 +1,4 @@
-import { makeCall } from "./client";
+import { makeCall } from "../client";
 
 export class ModulesAPI {
 
@@ -12,7 +12,7 @@ export class ModulesAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("GET", "modules", data, options);
+    return makeCall("GET", "admin/modules", data, options);
   }
   
   /**
@@ -25,7 +25,7 @@ export class ModulesAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("POST", "modules", data, options);
+    return makeCall("POST", "admin/modules", data, options);
   }
   
   /**
@@ -39,7 +39,7 @@ export class ModulesAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("GET", `modules/${moduleId}`, data, options);
+    return makeCall("GET", `admin/modules/${moduleId}`, data, options);
   }
   
   /**
@@ -53,7 +53,7 @@ export class ModulesAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("PATCH", `modules/${moduleId}`, data, options);
+    return makeCall("PATCH", `admin/modules/${moduleId}`, data, options);
   }
 
   /**
@@ -67,7 +67,7 @@ export class ModulesAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("DELETE", `modules/${moduleId}`, data, options);
+    return makeCall("DELETE", `admin/modules/${moduleId}`, data, options);
   }
 
   /**
@@ -83,7 +83,7 @@ export class ModulesAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("PUT", `projects/${projectId}/modules/${moduleId}/order/${order}`, data, options);
+    return makeCall("PUT", `admin/projects/${projectId}/modules/${moduleId}/order/${order}`, data, options);
   }
 
   /**
@@ -98,6 +98,6 @@ export class ModulesAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("DELETE", `projects/${projectId}/modules/${moduleId}`, data, options);
+    return makeCall("DELETE", `admin/projects/${projectId}/modules/${moduleId}`, data, options);
   }
 }

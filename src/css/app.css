@@ -83,3 +83,11 @@ label {
   margin-left: 1px;
   margin-right: 1px;
 }
+
+/** Accordion **/
+.flow-module-status-completed > h2 > button{
+  background-color: #ace6bb !important;
+  color: black !important;
+  border-color: #ace6bb !important;
+  box-shadow: none !important;
+}

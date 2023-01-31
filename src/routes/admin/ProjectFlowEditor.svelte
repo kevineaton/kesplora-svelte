@@ -3,9 +3,10 @@
   import { Icon } from "sveltestrap";
   import { flip } from "svelte/animate";
   import { dndzone } from "svelte-dnd-action";
-  import { BlocksAPI, ModulesAPI, ProjectsAPI } from "../api";
-  import { Card, error, Screen, success } from "../structure";
-  import ProjectFlowEditorModule from "../structure/ProjectFlowEditorModule.svelte";
+  import { SiteAPI } from "../../api";
+  import { BlocksAPI, ModulesAPI, ProjectsAPI } from "../../api/admin";
+  import { Card, error, Screen, success } from "../../structure";
+  import ProjectFlowEditorModule from "../../structure/ProjectFlowEditorModule.svelte";
   import { Link } from "svelte-routing";
 
   export let projectId = 0;
@@ -25,7 +26,7 @@
     try{
       const pResult = await ProjectsAPI.getProject(projectId);
       const pFlowResult = await ProjectsAPI.getProjectFlow(projectId);
-      const pConsentResult = await ProjectsAPI.getProjectConsentForm(projectId);
+      const pConsentResult = await SiteAPI.getProjectConsent(projectId);
       const aMResult = await ModulesAPI.getModules();
       const aBResult = await BlocksAPI.getBlocks();
 

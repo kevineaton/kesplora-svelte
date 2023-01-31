@@ -2,8 +2,8 @@
   import { Icon, Modal, ModalBody, ModalFooter, ModalHeader } from "sveltestrap";
   import { flip } from "svelte/animate";
   import { dndzone } from "svelte-dnd-action";
-  import { BlocksAPI, ModulesAPI } from "../api";
-  import BlockContentViewer from "../routes/BlockContent/BlockContentViewer.svelte";
+  import { BlocksAPI } from "../api/admin";
+  import BlockContentViewer from "./BlockContentViewer.svelte";
   import Loading from "./Loading.svelte";
     import { error, success } from "./Alert";
 

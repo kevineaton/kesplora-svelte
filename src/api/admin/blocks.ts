@@ -1,4 +1,4 @@
-import { makeCall } from "./client";
+import { makeCall } from "../client";
 
 export class BlocksAPI {
 
@@ -12,7 +12,7 @@ export class BlocksAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("GET", "blocks", data, options);
+    return makeCall("GET", "admin/blocks", data, options);
   }
   
   /**
@@ -26,7 +26,7 @@ export class BlocksAPI {
       ...blockData,
       blockType,
     }
-    return makeCall("POST", `blocks/${blockType}`, data, options);
+    return makeCall("POST", `admin/blocks/${blockType}`, data, options);
   }
   
   /**
@@ -40,7 +40,7 @@ export class BlocksAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("GET", `blocks/${blockId}`, data, options);
+    return makeCall("GET", `admin/blocks/${blockId}`, data, options);
   }
   
   /**
@@ -54,7 +54,7 @@ export class BlocksAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("PATCH", `blocks/${blockId}`, data, options);
+    return makeCall("PATCH", `admin/blocks/${blockId}`, data, options);
   }
 
   /**
@@ -68,7 +68,7 @@ export class BlocksAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("DELETE", `blocks/${blockId}`, data, options);
+    return makeCall("DELETE", `admin/blocks/${blockId}`, data, options);
   }
 
   /**
@@ -84,7 +84,7 @@ export class BlocksAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("PUT", `modules/${moduleId}/blocks/${blockId}/order/${order}`, data, options);
+    return makeCall("PUT", `admin/modules/${moduleId}/blocks/${blockId}/order/${order}`, data, options);
   }
 
   /**
@@ -99,7 +99,7 @@ export class BlocksAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("DELETE", `modules/${moduleId}/blocks/${blockId}`, data, options);
+    return makeCall("DELETE", `admin/modules/${moduleId}/blocks/${blockId}`, data, options);
   }
 
   /**
@@ -113,7 +113,7 @@ export class BlocksAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("GET", `/modules/${moduleId}/blocks`, data, options);
+    return makeCall("GET", `admin/modules/${moduleId}/blocks`, data, options);
   }
 
   /**
@@ -127,6 +127,6 @@ export class BlocksAPI {
     const data = {
       ...otherData,
     }
-    return makeCall("DELETE", `/modules/${moduleId}/blocks`, data, options);
+    return makeCall("DELETE", `admin/modules/${moduleId}/blocks`, data, options);
   }
 }

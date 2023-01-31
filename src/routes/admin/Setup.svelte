@@ -1,9 +1,9 @@
 <script lang="ts">
   import { navigate } from "svelte-routing";
-  import { isSetupStore, siteStore } from "../stores";
-  import { errorCodeToDisplayString, SiteAPI } from "../api";
-  import { Card, Screen, error, success } from "../structure/index";
-  import MarkdownEditor from "../structure/MarkdownEditor.svelte";
+  import { isSetupStore, siteStore } from "../../stores";
+  import { errorCodeToDisplayString, SiteAPI } from "../../api";
+  import { Card, Screen, error, success } from "../../structure/index";
+  import MarkdownEditor from "../../structure/MarkdownEditor.svelte";
 
   let shortName = "";
   let name = "";

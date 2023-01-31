@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { EmbedPDF, EmbedYoutube } from "../../structure";
+  import { EmbedPDF, EmbedYoutube } from "../.";
   export let content: any;
   if(!content.presentationType){
     content.presentationType = "pdf";
