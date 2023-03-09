@@ -1,8 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { Link } from "svelte-routing";
+  import { navigate } from "svelte-routing";
   import { Icon, Modal, ModalBody, ModalFooter, ModalHeader } from "sveltestrap";
   import { ProjectsAPI } from "../../api/admin";
+  import { SiteAPI } from "../../api";
   import { Card, error, Screen, success } from "../../structure";
   import MarkdownEditor from "../../structure/MarkdownEditor.svelte";
 
@@ -18,6 +19,7 @@
     contactInformationDisplay: "",
     institutionInformationDisplay: "",
   };
+  let hasChanges = false;
 
   let showNewProjectModal = false;
   let newProjectName = "";
@@ -28,6 +30,7 @@
   let showProjectShortDescriptionEditModal = false;
   let showProjectFullDescriptionEditModal = false;
   let showProjectConsentFormModal = false;
+  let showHasChangesModal = false;
 
   onMount(async () => {
     try{
@@ -54,14 +57,20 @@
     showProjectConsentFormModal = !showProjectConsentFormModal;
   }
 
+  const toggleShowHasChangesModal = () => {
+    showHasChangesModal = !showHasChangesModal;
+  }
+
   const handleConsentFormUpdates = (field: string, val: string) => {
     consentForm[field] = val;
     consentForm = consentForm;
+    hasChanges = true;
   }
 
   const handleProjectFieldChanges = (field: string, val: string) => {
     selectedProject[field] = val;
     selectedProject = selectedProject;
+    hasChanges = true;
   }
 
   const createProject = async () => {
@@ -93,7 +102,8 @@
     // we need to get the consent form
     projectLoading = true;
     try{
-      const result = await ProjectsAPI.getProjectConsentForm(selectedProject.id);
+      // const result = await ProjectsAPI.getProjectConsentForm(selectedProject.id);
+      const result = await SiteAPI.getProjectConsent(selectedProject.id);
       consentForm = result.body.data;
     }catch(err){
       // fail silently, in case there simply isn't one yet
@@ -117,7 +127,20 @@
       error("", "Could not save that project. Please try again.")
     } finally {
       loading = false;
+      hasChanges = false;
     }
+  }
+
+  const confirmDiscardChanges = () => {
+    if(hasChanges){
+      toggleShowHasChangesModal();
+    } else {
+      manageModules();
+    }
+  }
+
+  const manageModules = () => {
+    navigate(`/admin/projects/${selectedProject.id}/flow`, {replace: true });
   }
 
 </script>
@@ -161,11 +184,11 @@
           </div>
           <div class="form-group">
             <label for="selectedProject.name}">Project Name</label>
-            <input type="text" id="selectedProject.name}" bind:value={selectedProject.name} class="form-control" disabled={selectedProject.hasParticipants} />
+            <input type="text" id="selectedProject.name}" bind:value={selectedProject.name} class="form-control" disabled={selectedProject.hasParticipants} on:keyup={() => hasChanges = true} />
           </div>
           <div class="form-group">
             <label for="selectedProject.shortCode">Project Signup Code</label>
-            <input type="text" id="selectedProject.shortCode" bind:value={selectedProject.shortCode} class="form-control" />
+            <input type="text" id="selectedProject.shortCode" bind:value={selectedProject.shortCode} class="form-control" on:keyup={() => hasChanges = true} />
           </div>
           <div class="form-group">
             <label for="selectedProject.signupStatus">Participants Can Sign Up</label>
@@ -177,7 +200,7 @@
           </div>
           <div class="form-group">
             <label for="selectedProject.status">Status</label>
-            <select id="selectedProject.status" bind:value={selectedProject.status} class="form-control">
+            <select id="selectedProject.status" bind:value={selectedProject.status} class="form-control" on:change={() => hasChanges = true} >
               <option value="pending">Pending Launch</option>
               <option value="active">Active</option>
               <option value="disabled">Disabled</option>
@@ -186,7 +209,7 @@
           </div>
           <div class="form-group">
             <label for="selectedProject.showStatus">Show Project</label>
-            <select id="selectedProject.showStatus" bind:value={selectedProject.showStatus} class="form-control">
+            <select id="selectedProject.showStatus" bind:value={selectedProject.showStatus} class="form-control" on:change={() => hasChanges = true}>
               <option value="site">On Main Site</option>
               <option value="direct">Only Directly</option>
               <option value="no">Not To Anyone</option>
@@ -194,11 +217,11 @@
           </div>
           <div class="form-group">
             <label for="selectedProject.maxParticipants">Maximum Participants</label>
-            <input type="text" id="selectedProject.maxParticipants" bind:value={selectedProject.maxParticipants} class="form-control" />
+            <input type="text" id="selectedProject.maxParticipants" bind:value={selectedProject.maxParticipants} class="form-control" on:keyup={() => hasChanges = true} />
           </div>
           <div class="form-group">
             <label for="selectedProject.participantVisibility">Visibility</label>
-            <select id="selectedProject.participantVisibility" bind:value={selectedProject.participantVisibility} class="form-control">
+            <select id="selectedProject.participantVisibility" bind:value={selectedProject.participantVisibility} class="form-control" on:change={() => hasChanges = true} >
               <option value="code">Anonymous - Code Only</option>
               <option value="email">Confidential - Email Only</option>
               <option value="full">Full Profile</option>
@@ -206,7 +229,7 @@
           </div>
           <div class="form-group">
             <label for="selectedProject.participantMinimumAge">Minimum Age</label>
-            <input type="text" id="selectedProject.participantMinimumAge" bind:value={selectedProject.participantMinimumAge} class="form-control" disabled={selectedProject.hasParticipants} />
+            <input type="text" id="selectedProject.participantMinimumAge" bind:value={selectedProject.participantMinimumAge} class="form-control" disabled={selectedProject.hasParticipants} on:keyup={() => hasChanges = true} />
           </div>
           <div class="form-group">
             <button class="btn btn-block btn-primary" on:click={toggleProjectFullDescriptionModal}>Edit Full Description</button>
@@ -217,14 +240,16 @@
           <div class="form-group">
             <button class="btn btn-block btn-primary" on:click={toggleProjectConsentFormModal} disabled={selectedProject.hasParticipants} >Edit Consent Form</button>
           </div>
-          <div class="form-group">
-            <button class="btn btn-block btn-primary" on:click={saveProject}>Save Changes</button>
-          </div>
+          {#if hasChanges}
+            <div class="form-group">
+              <button class="btn btn-block btn-primary" on:click={saveProject}>Save Changes</button>
+            </div>
+          {/if}
           <div class="form-group">
             {#if selectedProject.hasParticipants}
               <button class="btn btn-block btn-primary" disabled={true}>Manage Modules</button>
             {:else}
-              <Link to={`/admin/projects/${selectedProject.id}/flow`} class="btn btn-block btn-primary">Manage Modules</Link>
+              <button class="btn btn-block btn-primary" on:click={confirmDiscardChanges}>Manage Modules{#if hasChanges}*{/if}</button>
             {/if}
           </div>
         </Card>
@@ -312,6 +337,16 @@
     </ModalBody>
     <ModalFooter>
       <button class="btn btn-block btn-primary" on:click={toggleProjectConsentFormModal}>Done</button>
+    </ModalFooter>
+  </Modal>
+
+  <Modal isOpen={showHasChangesModal} toggle={toggleShowHasChangesModal}>
+    <ModalHeader toggle={toggleShowHasChangesModal}>Discard Changes?</ModalHeader>
+    <ModalBody>
+      <strong>Warning: </strong> You have unsaved changes. Are you sure you want to navigate away?
+    </ModalBody>
+    <ModalFooter>
+      <button class="btn btn-block btn-primary" on:click={manageModules}>Yes, Discard Changes</button>
     </ModalFooter>
   </Modal>
 </Screen>

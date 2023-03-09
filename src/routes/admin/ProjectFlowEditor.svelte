@@ -23,15 +23,14 @@
 
   onMount(async () => {
     projectLoading = true;
+    // we have separate try/catch since the consent form may not be configured yet
     try{
       const pResult = await ProjectsAPI.getProject(projectId);
       const pFlowResult = await ProjectsAPI.getProjectFlow(projectId);
-      const pConsentResult = await SiteAPI.getProjectConsent(projectId);
       const aMResult = await ModulesAPI.getModules();
       const aBResult = await BlocksAPI.getBlocks();
 
       project = pResult.body.data;
-      consent = pConsentResult.body.data;
       flow = pFlowResult.body.data;
       const allModules = aMResult.body.data;
       allBlocks = aBResult.body.data;
@@ -54,9 +53,15 @@
       allModulesNotInProject = deDupedModules;
     }catch(err){
       error("", "Could not load the project.")
-    }finally {
-      projectLoading = false;
     }
+
+    try {
+      const pConsentResult = await SiteAPI.getProjectConsent(projectId);
+      consent = pConsentResult.body.data;
+    }catch(err){
+      
+    }
+    projectLoading = false;
   });
 
   //

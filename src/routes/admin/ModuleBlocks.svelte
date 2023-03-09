@@ -6,7 +6,7 @@
   import { BlocksAPI, ModulesAPI } from "../../api/admin";
   import { Card, error, Screen, success } from "../../structure";
   import BlockContentViewer from "../../structure/BlockContentViewer.svelte";
-    import { Link } from "svelte-routing";
+  import { Link } from "svelte-routing";
 
   export let moduleId;
 

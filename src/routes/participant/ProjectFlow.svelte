@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { Accordion, AccordionItem, Icon } from "sveltestrap";
   import { ProjectsAPI } from "../../api/participant";
-  import { BlockContentViewerExternal, BlockContentViewerPresentation, BlockContentViewerText } from "../../structure/BlockContent";
+  import { BlockContentViewerExternal, BlockContentViewerFile, BlockContentViewerForm, BlockContentViewerEmbed, BlockContentViewerText } from "../../structure/BlockContent";
   import Card from "../../structure/Card.svelte";
   import Screen from "../../structure/Screen.svelte";
   import { DateTime } from "luxon";
@@ -13,6 +13,8 @@
   // the status of each block, and the completed flows. In the future, we may add
   // project fields to determine whether to restrict access, but for now, a user
   // can go in any order they want.
+
+  // TODO: move the viewer switch to the BlockContentViewer
 
   export let projectId = 0;
   let loading = true;
@@ -142,6 +144,9 @@
     }
   }
 
+  const submitFormResponse = async () => {
+  }
+
   const updateFlowWithStatusChange = (moduleId: number, blockId: number, newStatus: string) => {
     const blocks: any[] = [];
     flow[moduleId].blocks.forEach((b) => {
@@ -265,22 +270,28 @@
           </div>
           <div class="row">
             <div class="col-12">
-              {#if selectedBlock.blockType === "text"}
-                <BlockContentViewerText content={selectedBlock.content}/>
+              {#if selectedBlock.blockType === "embed"}
+              <BlockContentViewerEmbed content={selectedBlock.content}/>
               {:else if selectedBlock.blockType === "external"}
                 <BlockContentViewerExternal content={selectedBlock.content}/>
-              {:else if selectedBlock.blockType === "presentation"}
-                <BlockContentViewerPresentation content={selectedBlock.content}/>
+              {:else if selectedBlock.blockType === "file"}
+                <BlockContentViewerFile content={selectedBlock.content}/>
+              {:else if selectedBlock.blockType === "form"}
+                <BlockContentViewerForm projectId={projectId} block={selectedBlock} onCompleted={markStatusCompleted} onReset={markStatusNotStarted} />
+              {:else if selectedBlock.blockType === "text"}
+                <BlockContentViewerText content={selectedBlock.content}/>
               {/if}
             </div>
           </div>
           <div class="row">
             <div class="col-12">
-              {#if selectedBlock.userStatus === "started"}
-                <button class="btn btn-block btn-success" on:click={markStatusCompleted}>Mark Complete</button>
-              {:else if selectedBlock.userStatus === "completed"}
-                <button class="btn btn-block btn-info" on:click={markStatusNotStarted}>Reset</button>
-                <span class="text-small">Completed {DateTime.fromISO(selectedBlock.lastUpdatedOn).toLocaleString(DateTime.DATETIME_FULL)}</span>
+              {#if selectedBlock.blockType !== "form"}
+                {#if selectedBlock.userStatus === "started"}
+                  <button class="btn btn-block btn-success" on:click={markStatusCompleted}>Mark Complete</button>
+                {:else if selectedBlock.userStatus === "completed"}
+                  <button class="btn btn-block btn-info" on:click={markStatusNotStarted}>Reset</button>
+                  <span class="text-small">Completed {DateTime.fromISO(selectedBlock.lastUpdatedOn).toLocaleString(DateTime.DATETIME_FULL)}</span>
+                {/if}
               {/if}
             </div>
           </div>

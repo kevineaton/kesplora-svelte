@@ -46,6 +46,14 @@
       <Link to="/admin/blocks">Blocks</Link>
     </div>
   </div>
+  <div class="row menu-row">
+    <div class="col-1 menu-icon">
+      <Icon name="file-earmark-medical" />
+    </div>
+    <div class="col-11 menu-link">
+      <Link to="/admin/files">Files</Link>
+    </div>
+  </div>
 
   <hr class="menu-separator"/>
 

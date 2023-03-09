@@ -8,6 +8,7 @@
 
   // routes
   import {
+    Files,
     Blocks,
     Home,
     Login,
@@ -84,8 +85,9 @@
               <Route path="/admin/projects" component={Projects} />
               <Route path="/admin/projects/:projectId/flow" component={ProjectFlowEditor} />
               <Route path="/admin/modules" component={Modules} />
-              <Route path="/admin/modules/:moduleId/blocks" component={ModuleBlocks} let:params />
+              <Route path="/admin/modules/:moduleId/blocks" component={ModuleBlocks} />
               <Route path="/admin/blocks" component={Blocks} />
+              <Route path="/admin/files" component={Files} />
 
               <Route path="/participant/projects/:projectId" component={ProjectSummary} />
               <Route path="/participant/projects/:projectId/flow" component={ProjectFlow} />

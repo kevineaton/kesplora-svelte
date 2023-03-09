@@ -31,6 +31,8 @@
   let userEnrollPassword = "";
   let userEnrollDOB = new Date();
 
+  let projectCode = "";
+
   // post-enroll modals
   let showParticipantCodeModal = false;
   let participantCode = "";
@@ -42,14 +44,17 @@
   // make sure the project is enrollable; if so, show the description and then the consent
 
   onMount(async () => {
-    try {
-      const partProjResult = await ProjectsAPI.getProject(projectId);
-      // if this didn't throw an error, they are already enrolled, so just
-      // redirect them
-      navigate(`/participant/projects/${projectId}/flow`, {replace: true });
-      return;
-    }catch(err){
-      console.log(err);
+    if($userStore && $userStore.id){
+      console.log($userStore);
+      try {
+        const partProjResult = await ProjectsAPI.getProject(projectId);
+        // if this didn't throw an error, they are already enrolled, so just
+        // redirect them
+        navigate(`/participant/projects/${projectId}/flow`, {replace: true });
+        return;
+      }catch(err){
+        console.log(err);
+      }
     }
     const pResult = await SiteAPI.getProjectInfo(projectId);
     const cResult = await SiteAPI.getProjectConsent(projectId);
@@ -95,11 +100,11 @@
       participantProvidedFirstName,
       participantProvidedLastName,
       consentStatus,
+      projectCode,
     };
     if(data.participantProvidedFirstName === "" || data.participantProvidedLastName === "" || data.participantProvidedContactInformation === ""){
       return error("Missing Legal Information", "You must provide your first name, last name, and contact information to sign this consent form.");
     }
-    // loading = true;
     try{
       const result = await SiteAPI.saveProjectConsentResponse(projectId, data);
       const res = result.body.data;      
@@ -114,25 +119,17 @@
         participantCode = res.user.participantCode;
         showRegisterAndEnrollModal = false;
         showParticipantCodeModal = true;
-        console.log("Continuing...")
-        console.log(participantCode)
-        console.log(showRegisterAndEnrollModal)
-        console.log(showParticipantCodeModal)
       } else if(res.user && res.user.status === "pending"){
         // TODO: show them a validation form
-        console.log(2)
       } else {
         // TODO: we just redirect to the project
-        console.log(3)
       }
-      console.log(4);
     }catch(err){
       console.log("error")
       console.log(err);
+      error("Uh oh!", "We could not enroll you. Check your information and try again.");
     }finally{
-      console.log("Finally, loading to false")
       loading = false;
-      console.log("What is happening")
     }
   }
 
@@ -142,13 +139,9 @@
     // separate try/catch blocks
     if($userStore !== null){
       try{
-        console.log(1);
         await UsersAPI.logout();
-        console.log(2);
         window.localStorage.clear();
-        console.log(3);
         $userStore = null;
-        console.log(4);
       }catch(err){
         console.log(err);
       }
@@ -168,7 +161,7 @@
   
 </script>
 
-<Screen { loading }>
+<Screen { loading } ignoreAuth={true}>
   <div class="row">
     <div class="col-10">
       <h1>{project.name}</h1>
@@ -269,6 +262,13 @@
         <label for="participantComments">Additional Comments</label>
         <input type="text" bind:value={participantComments} class="form-control" id="participantComments" />
       </div>
+      {#if project.signupStatus === "with_code"}
+        <div class="form-group">
+          <label for="projectCode">Project Code</label>
+          <input type="text" bind:value={projectCode} class="form-control" id="projectCode" />
+          <span class="small">This project requires a code to sign up and should have been provided to you.</span>
+        </div>
+      {/if}
     </ModalBody>
     <ModalFooter>
       <button class="btn btn-block btn-success" on:click={submitConsent}>I Agree to Sign the Consent Form</button>

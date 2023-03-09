@@ -4,6 +4,7 @@ import Login from "./Login.svelte";
 
 // admin
 import Blocks from "./admin/Blocks.svelte";
+import Files from "./admin/Files.svelte";
 import Modules from "./admin/Modules.svelte";
 import ModuleBlocks from "./admin/ModuleBlocks.svelte";
 import Projects from "./admin/Projects.svelte";
@@ -18,7 +19,7 @@ import ProjectFlow from "./participant/ProjectFlow.svelte";
 export { Blocks, Home, Login };
 
 // admin
-export { Modules, ModuleBlocks, Projects, ProjectFlowEditor, Setup };
+export { Files, Modules, ModuleBlocks, Projects, ProjectFlowEditor, Setup };
 
 // participant
 export { ProjectSummary, ProjectFlow };

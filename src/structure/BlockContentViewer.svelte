@@ -1,9 +1,9 @@
 <script lang="ts">
   import { Card } from ".";
-  import { BlockContentViewerExternal, BlockContentViewerPresentation, BlockContentViewerText } from "./BlockContent/index";
+  import { BlockContentViewerExternal, BlockContentViewerFile, BlockContentViewerEmbed, BlockContentViewerText } from "./BlockContent/index";
   
   export let block;
-  
+  console.log(block);
 </script>
 
 <div class="content-viewer">
@@ -17,8 +17,10 @@
       <div class="col-12">
         {#if block.blockType === "external"}
           <BlockContentViewerExternal content={block.content} />
-        {:else if block.blockType === "presentation"}
-          <BlockContentViewerPresentation content={block.content} />
+        {:else if block.blockType === "embed"}
+          <BlockContentViewerEmbed content={block.content} />
+        {:else if block.blockType === "file"}
+          <BlockContentViewerFile content={block.content} />
         {:else if block.blockType === "text"}
           <BlockContentViewerText content={block.content} />
         {/if}

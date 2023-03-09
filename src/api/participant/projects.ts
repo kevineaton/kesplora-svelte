@@ -74,4 +74,105 @@ export class ProjectsAPI {
     }
     return makeCall("PUT", `participant/projects/${projectId}/modules/${moduleId}/blocks/${blockId}/status/${status}`, data, options);
   }
+
+  // special handlers for forms
+
+  /**
+   * Saves a new submission
+   * @param projectId 
+   * @param moduleId 
+   * @param blockId 
+   * @param responseData 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public saveFormSubmission(projectId: number, moduleId: number, blockId: number, responseData, otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+      ...responseData,
+    }
+    return makeCall("POST", `participant/projects/${projectId}/modules/${moduleId}/blocks/${blockId}/submissions`, data, options);
+  }
+
+  /**
+   * Gets submissions for a form
+   * @param projectId 
+   * @param moduleId 
+   * @param blockId 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public getFormSubmissions(projectId: number, moduleId: number, blockId: number, otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("GET", `participant/projects/${projectId}/modules/${moduleId}/blocks/${blockId}/submissions`, data, options);
+  }
+
+  /**
+   * Deletes all form submissions and resets the module
+   * @param projectId 
+   * @param moduleId 
+   * @param blockId 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public deleteFormSubmissions(projectId: number, moduleId: number, blockId: number, otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("DELETE", `participant/projects/${projectId}/modules/${moduleId}/blocks/${blockId}/submissions`, data, options);
+  }
+
+  /**
+   * Deletes a specific submission
+   * @param projectId 
+   * @param moduleId 
+   * @param blockId 
+   * @param submissionId 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public deleteFormSubmission(projectId: number, moduleId: number, blockId: number, submissionId: number, otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("DELETE", `participant/projects/${projectId}/modules/${moduleId}/blocks/${blockId}/submissions/${submissionId}`, data, options);
+  }
+
+  /**
+   * Downloads a file for a participant
+   * @param fileId 
+   * @param fileName 
+   * @param queryData 
+   * @param options 
+   * @returns 
+   */
+  public downloadFileBinary(fileId: number, fileName: string = "file", format: string = "binary", queryData: any = {}, options: any = {}){
+    if(format === "base64"){
+      queryData.format = format;
+    } else {
+      options.asDownload = true;
+      options.fileName = fileName;
+    }
+    return makeCall("GET", `participant/files/${fileId}/download`, queryData, options);
+  }
+
+  /**
+   * Gets the file metadata
+   * @param fileId 
+   * @param metaData 
+   * @param options 
+   * @returns 
+   */
+  public getFileMeta(fileId, metaData: any = {}, options: any = {}){
+    const data = {
+      ...metaData,
+    }
+    return makeCall("GET", `participant/files/${fileId}`, data, options);
+  }
 }

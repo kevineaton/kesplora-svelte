@@ -1,5 +1,7 @@
 import BlockExternalEdit from "./BlockExternalEdit.svelte";
-import BlockPresentationEdit from "./BlockPresentationEdit.svelte";
+import BlockFileEdit from "./BlockFileEdit.svelte";
+import BlockFormEdit from "./BlockFormEdit.svelte";
+import BlockEmbedEdit from "./BlockEmbedEdit.svelte";
 import BlockTextEdit from "./BlockTextEdit.svelte";
 
-export { BlockExternalEdit, BlockPresentationEdit, BlockTextEdit };
+export { BlockExternalEdit, BlockFileEdit, BlockFormEdit, BlockEmbedEdit, BlockTextEdit };
