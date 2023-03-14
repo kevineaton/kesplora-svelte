@@ -1,6 +1,7 @@
 import Card from "./Card.svelte";
 import { error, success, warning } from "./Alert";
 import { sizeToReadable } from "./Formatter";
+import DatePicker from "./DatePicker.svelte";
 import EmbedPDF from "./EmbedPDF.svelte";
 import EmbedYoutube from "./EmbedYoutube.svelte";
 import FileTypeAhead from "./FileTypeAhead.svelte";
@@ -11,6 +12,6 @@ import Menu from "./Menu.svelte";
 import Navbar from "./Navbar.svelte";
 import Screen from "./Screen.svelte";
 
-export { Card, EmbedPDF, EmbedYoutube, FileTypeAhead, Loading, LoadingButton, MarkdownEditor, Menu, Navbar, Screen };
+export { Card, DatePicker, EmbedPDF, EmbedYoutube, FileTypeAhead, Loading, LoadingButton, MarkdownEditor, Menu, Navbar, Screen };
 export { error, success, warning };
 export { sizeToReadable };

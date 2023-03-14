@@ -6,13 +6,11 @@
 
 
   let loading = true;
-  export let index = 0;
   export let question = null;
   export let formType: "quiz" | "survey" = "survey";
 
   const onEdit = (e: any) => {
     question[e.target.id] = e.target.value;
-    console.log(question);
   }
 
   onMount(() => {

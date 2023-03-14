@@ -14,9 +14,15 @@
     Login,
     Modules,
     ModuleBlocks,
+    Profile,
     Projects,
     ProjectFlowEditor,
+    ProjectUsers,
     Setup,
+    Site,
+    SiteUsers,
+    UserProject,
+    UserInformation,
 
     ProjectSummary,
     ProjectFlow,
@@ -82,12 +88,21 @@
               <Route path="/" component={Home} />
               <Route path="/setup" component={Setup} />
               <Route path="/login" component={Login} />
+              <Route path="/me" component={Profile} />
+              <Route path="/profile" component={Profile} />
+
+              <Route path="/admin/users" component={SiteUsers} />
+              <Route path="/admin/users/:userId" component={UserInformation} />
+              <Route path="/admin/users/:userId/projects/:projectId" component={UserProject} />
+              <Route path="/admin/site" component={Site} />
               <Route path="/admin/projects" component={Projects} />
               <Route path="/admin/projects/:projectId/flow" component={ProjectFlowEditor} />
               <Route path="/admin/modules" component={Modules} />
               <Route path="/admin/modules/:moduleId/blocks" component={ModuleBlocks} />
               <Route path="/admin/blocks" component={Blocks} />
               <Route path="/admin/files" component={Files} />
+              <Route path="/admin/projects/:projectId/users" component={ProjectUsers} />
+
 
               <Route path="/participant/projects/:projectId" component={ProjectSummary} />
               <Route path="/participant/projects/:projectId/flow" component={ProjectFlow} />

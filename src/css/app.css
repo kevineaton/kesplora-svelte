@@ -51,6 +51,18 @@
   text-align: center;
 }
 
+.text-status-completed {
+  color: rgb(0, 111, 0);
+}
+
+.text-status-not_started {
+  color: rgb(144, 3, 3);
+}
+
+.text-link {
+  cursor: pointer;
+}
+
 
 /** Forms **/
 
@@ -71,6 +83,14 @@ label {
 /** Nav **/
 .nav-link {
   color: white;
+}
+
+.tab-content .nav-tabs .nav-item .nav-link {
+  color: gray;
+}
+
+.tab-content .nav-tabs .nav-item .nav-link.active {
+  color: black;
 }
 
 

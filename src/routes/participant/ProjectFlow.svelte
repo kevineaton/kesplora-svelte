@@ -1,11 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { Accordion, AccordionItem, Icon } from "sveltestrap";
+  import { DateTime } from "luxon";
   import { ProjectsAPI } from "../../api/participant";
   import { BlockContentViewerExternal, BlockContentViewerFile, BlockContentViewerForm, BlockContentViewerEmbed, BlockContentViewerText } from "../../structure/BlockContent";
-  import Card from "../../structure/Card.svelte";
-  import Screen from "../../structure/Screen.svelte";
-  import { DateTime } from "luxon";
+  import { Card, Screen } from "../../structure";
+  import { processFlow } from "../../utils/flowHelpers";
 
   // This is a pretty large file, as this is the bulk of the participant experience.
   // Effectively, this is where the participants in a study will spend most of their time
@@ -35,7 +35,7 @@
     try {
       const partProjResult = await ProjectsAPI.getProject(projectId);
       const flowResult = await ProjectsAPI.getProjectFlow(projectId);
-      flow = flowToMap(flowResult.body.data);
+      flow = processFlow(flowResult.body.data);
       project = partProjResult.body.data;
       selectFirstNonCompleteBlock()
       loading = false;
@@ -45,44 +45,6 @@
       // navigate(`/participant/projects/${projectId}`, {replace: true });
     }
   })
-
-  // TODO: move this to a shared library?
-  const flowToMap = (flow: any[]) => {
-    const flowMap: any = {};
-    // we iterate over and group them into modules with blocks, and try to keep track of the status
-    let currentModuleId = 0;
-    let currentModuleStatus = "not_started";
-    flow.forEach((block: any, index: number) => {
-      // if the new block module id differs, set up the next block
-      if(block.moduleId !== currentModuleId){
-        // set the status and build the map, move on to the next one
-        if(index != 0){
-          flowMap[flow[index - 1].moduleId].status = currentModuleStatus;
-        }
-        currentModuleStatus = "not_started"
-        flowMap[block.moduleId] = {
-          blocks: [],
-          name: block.moduleName,
-          description: block.moduleDescription,
-          status: "not_started",
-          active: false,
-        }
-        currentModuleId = block.moduleId;
-        tabs[block.moduleId] = index === 0;
-      }
-      if(block.userStatus !== currentModuleStatus){
-        currentModuleStatus = block.userStatus;
-      }
-      block.id = block.blockId; // the flow uses a different id than an individual block call
-      flowMap[block.moduleId].blocks.push(block);
-
-      // if this is the last one, we need to close out the module status
-      if(index === flow.length - 1){
-        flowMap[block.moduleId].status = currentModuleStatus;
-      }
-    })
-    return flowMap;
-  }
 
   // select a block; this isn't as simple as assigning a selected block, since we need to update the server
   // with the participant's status

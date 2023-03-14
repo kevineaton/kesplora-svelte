@@ -1,6 +1,6 @@
 <script type="ts">
   import { onMount } from "svelte";
-  import { Icon, Modal, ModalBody, ModalFooter, ModalHeader } from "sveltestrap";
+  import { Modal, ModalBody, ModalFooter, ModalHeader } from "sveltestrap";
   import { FilesAPI } from "../../api/admin";
   import { Card, error, LoadingButton, Screen, sizeToReadable, success } from "../../structure";
   import { h } from "gridjs";
@@ -39,24 +39,26 @@
     id: "id",
     name: "",
     formatter: (cell: any) => {
-      return [h("i", {
-        "class": "text-primary bi bi-pencil icon-table",
-        "onClick": () => {
-          selectFileForUpdating(cell);
-        }
-      }),
-      h("i", {
-        "class": "text-primary bi bi-download icon-table",
-        "onClick": () => {
-          downloadFile(cell);
-        }
-      }),
-      h("i", {
-        "class": "text-danger bi bi-trash icon-table",
-        "onClick": () => {
-          selectFileForDeleting(cell);
-        }
-      })]
+      return [
+        h("i", {
+          "class": "text-primary bi bi-pencil icon-table",
+          "onClick": () => {
+            selectFileForUpdating(cell);
+          }
+        }),
+        h("i", {
+          "class": "text-primary bi bi-download icon-table",
+          "onClick": () => {
+            downloadFile(cell);
+          }
+        }),
+        h("i", {
+          "class": "text-danger bi bi-trash icon-table",
+          "onClick": () => {
+            selectFileForDeleting(cell);
+          }
+        })
+      ]
     }
   },];
 

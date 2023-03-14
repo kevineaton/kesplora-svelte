@@ -15,7 +15,6 @@
   const data = $siteStore && $siteStore.description ? $siteStore.description : "";
 
   // TODO: get the projects list based upon preferences
-  console.log($userStore)
 
 
   onMount(async () => {

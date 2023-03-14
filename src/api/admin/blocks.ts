@@ -129,4 +129,78 @@ export class BlocksAPI {
     }
     return makeCall("DELETE", `admin/modules/${moduleId}/blocks`, data, options);
   }
+
+  //
+  // Form Submissions
+  //
+
+  /**
+   * Gets the submissions for a user for a form
+   * @param projectId 
+   * @param moduleId 
+   * @param blockId 
+   * @param userId 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public getSubmissionsForUser(projectId: number, moduleId: number, blockId: number, userId: number, otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("GET", `admin/projects/${projectId}/modules/${moduleId}/blocks/${blockId}/users/${userId}/submissions`, data, options);
+  }
+  
+  /**
+   * Deletes all submissions for a user for a form
+   * @param projectId 
+   * @param moduleId 
+   * @param blockId 
+   * @param userId 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public deleteSubmissionsForUser(projectId: number, moduleId: number, blockId: number, userId: number, otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("DELETE", `admin/projects/${projectId}/modules/${moduleId}/blocks/${blockId}/users/${userId}/submissions`, data, options);
+  }
+
+  /**
+   * Gets a specific submission for a user
+   * @param projectId 
+   * @param moduleId 
+   * @param blockId 
+   * @param userId 
+   * @param submissionId 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public getSubmissionForUser(projectId: number, moduleId: number, blockId: number, userId: number, submissionId: number, otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("GET", `admin/projects/${projectId}/modules/${moduleId}/blocks/${blockId}/users/${userId}/submissions/${submissionId}`, data, options);
+  }
+
+  /**
+   * Deletes a submission for a user
+   * @param projectId 
+   * @param moduleId 
+   * @param blockId 
+   * @param userId 
+   * @param submissionId 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public deleteSubmissionForUser(projectId: number, moduleId: number, blockId: number, userId: number, submissionId: number, otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("DELETE", `admin/projects/${projectId}/modules/${moduleId}/blocks/${blockId}/users/${userId}/submissions/${submissionId}`, data, options);
+  }
 }

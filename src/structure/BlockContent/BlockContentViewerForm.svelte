@@ -71,8 +71,8 @@
     try {
       loading = true;
       await ProjectsAPI.saveFormSubmission(projectId, block.moduleId, block.id, { responses: data });
-      success("Submitted!", "You submission has been saved.")
       toggleSubmitModal()
+      success("Submitted!", "You submission has been saved.")
       onCompleted();
     }catch(err){
 

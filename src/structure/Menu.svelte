@@ -63,7 +63,7 @@
       <Icon name="person-workspace" />
     </div>
     <div class="col-11 menu-link">
-      <Link to="/admin/projects">Users</Link>
+      <Link to="/admin/users">Users</Link>
     </div>
   </div>
   <div class="row menu-row">
@@ -71,7 +71,15 @@
       <Icon name="clipboard-data" />
     </div>
     <div class="col-11 menu-link">
-      <Link to="/admin/projects">Reports</Link>
+      <Link to="/admin/reports">Reports</Link>
+    </div>
+  </div>
+  <div class="row menu-row">
+    <div class="col-1 menu-icon">
+      <Icon name="globe" />
+    </div>
+    <div class="col-11 menu-link">
+      <Link to="/admin/site">Site</Link>
     </div>
   </div>
 
@@ -82,7 +90,7 @@
       <Icon name="question-circle" />
     </div>
     <div class="col-11 menu-link">
-      <Link to="/admin/modules">Help</Link>
+      <Link to="/admin/help">Help</Link>
     </div>
   </div>
 
