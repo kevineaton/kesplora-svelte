@@ -2,6 +2,7 @@
 import Home from "./Home.svelte";
 import Login from "./Login.svelte";
 import Profile from "./Profile.svelte";
+import MyNotes from "./MyNotes.svelte";
 
 // admin
 import Blocks from "./admin/Blocks.svelte";
@@ -22,7 +23,7 @@ import ProjectSummary from "./participant/ProjectSummary.svelte";
 import ProjectFlow from "./participant/ProjectFlow.svelte";
 
 // general
-export { Home, Login, Profile };
+export { Home, Login, MyNotes, Profile };
 
 // admin
 export { Blocks, Files, Modules, ModuleBlocks, Projects, ProjectFlowEditor, ProjectUsers, Setup, Site, SiteUsers, UserProject, UserInformation };

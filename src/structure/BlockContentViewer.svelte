@@ -3,7 +3,6 @@
   import { BlockContentViewerExternal, BlockContentViewerFile, BlockContentViewerEmbed, BlockContentViewerText } from "./BlockContent/index";
   
   export let block;
-  console.log(block);
 </script>
 
 <div class="content-viewer">

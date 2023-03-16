@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Link } from "svelte-routing";
+  import { Link } from "svelte-routing";
   import { Icon, Offcanvas } from "sveltestrap";
   import { menuOpenStore, siteStore, userStore } from "../stores";
 

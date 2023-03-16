@@ -1,5 +1,5 @@
 import { processFlow } from "./flowHelpers";
-import { translateStatus } from "./formatters";
+import { capFirst, translateStatus } from "./formatters";
 import { translateDate, parseDate, dateToAgo } from "./dateHelpers";
 import {
   DATE_FORMAT_ISO,
@@ -10,7 +10,7 @@ import {
   DATE_FORMAT_LOCALE_SHORT
 } from "./dateHelpers";
 
-export { dateToAgo, parseDate, processFlow, translateDate, translateStatus };
+export { capFirst, dateToAgo, parseDate, processFlow, translateDate, translateStatus };
 
 export {
   DATE_FORMAT_ISO,

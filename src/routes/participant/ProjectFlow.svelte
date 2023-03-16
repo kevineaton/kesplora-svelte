@@ -2,6 +2,7 @@
   import { onMount } from "svelte";
   import { Accordion, AccordionItem, Icon } from "sveltestrap";
   import { DateTime } from "luxon";
+  import { flowStore } from "../../stores";
   import { ProjectsAPI } from "../../api/participant";
   import { BlockContentViewerExternal, BlockContentViewerFile, BlockContentViewerForm, BlockContentViewerEmbed, BlockContentViewerText } from "../../structure/BlockContent";
   import { Card, Screen } from "../../structure";
@@ -13,8 +14,6 @@
   // the status of each block, and the completed flows. In the future, we may add
   // project fields to determine whether to restrict access, but for now, a user
   // can go in any order they want.
-
-  // TODO: move the viewer switch to the BlockContentViewer
 
   export let projectId = 0;
   let loading = true;
@@ -62,6 +61,15 @@
         sb.lastUpdated = DateTime.now().toISO();      
       }
       selectedBlock = sb
+      flowStore.update((current) => {
+        current.current.projectId = sb.projectId;
+        current.current.projectName = sb.projectName;
+        current.current.moduleId = sb.moduleId;
+        current.current.moduleName = sb.moduleName;
+        current.current.blockId = sb.id;
+        current.current.blockName = sb.name;
+        return current;
+      })
       
     }catch(err){
       console.log(err);
@@ -104,9 +112,6 @@
     }finally {
       loading = false;
     }
-  }
-
-  const submitFormResponse = async () => {
   }
 
   const updateFlowWithStatusChange = (moduleId: number, blockId: number, newStatus: string) => {

@@ -13,4 +13,13 @@ export const translateStatus = (input: string) :string => {
       break;
   }
   return textOutput;
+};
+
+export const capFirst = (input: string): string => {
+  if(input.length === 0){
+    return input;
+  } else if(input.length === 1){
+    return input[0].toUpperCase();
+  }
+  return input[0].toUpperCase() + input.substring(1);
 }

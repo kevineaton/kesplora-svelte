@@ -12,6 +12,7 @@
     Blocks,
     Home,
     Login,
+    MyNotes,
     Modules,
     ModuleBlocks,
     Profile,
@@ -90,6 +91,7 @@
               <Route path="/login" component={Login} />
               <Route path="/me" component={Profile} />
               <Route path="/profile" component={Profile} />
+              <Route path="/notes" component={MyNotes} />
 
               <Route path="/admin/users" component={SiteUsers} />
               <Route path="/admin/users/:userId" component={UserInformation} />
