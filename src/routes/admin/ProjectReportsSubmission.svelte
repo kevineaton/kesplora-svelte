@@ -39,7 +39,7 @@
               {#if question.questionType === "single" || question.questionType === "multiple"}
                 <SingleMultiple data={question} />
               {:else if question.questionType === "short" || question.questionType === "long"}
-                <ShortLong data={question} type={question.questionType ? "long": "long"} />
+                <ShortLong data={question} type={question.questionType} />
               {:else if question.questionType === "likert5" || question.questionType === "likert7"}
                 <Likert data={question} likertCount={question.questionType === "likert5" ? 5 : 7} />
               {/if}

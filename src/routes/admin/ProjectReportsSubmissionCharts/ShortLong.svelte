@@ -1,6 +1,6 @@
 <script type="ts">
   import { onMount } from "svelte";
-  import { Collapse, Modal, ModalBody, ModalFooter, ModalHeader, TabContent, TabPane } from "sveltestrap";
+  import { Collapse, Icon, Modal, ModalBody, ModalFooter, ModalHeader, TabContent, TabPane } from "sveltestrap";
   import { Card } from "../../../structure";
   import { wordFrequency } from "../../../utils";
 
@@ -21,13 +21,6 @@
   
 
   onMount(() => {
-    for(let i = 0; i < 100; i++){
-      if(type === "long"){
-        data.responses.push({textResponse: "This is a rather long string that represents some interesting data for a user.\nThey may have typed in several 'things'. However, do not be distraught byt the length of the text since we should be doing things like collapsing after a certain length. But who knows? Maybe we don't.<strong>SMILE</strong>"})
-      }else {
-        data.responses.push({textResponse: "" + i})
-      }
-    }
     top = data.responses.slice(0, 4);
     let all = "";
     data.responses.forEach((response) => {
@@ -85,7 +78,7 @@
                     </Collapse>
                   </div>
                   <div class="col-1">
-                    <button on:click={() => expandLongResponse(index, false)}>X</button>
+                    <Icon name={isOpenMap[index] ? "caret-down-fill" : "caret-right-fill"} onclick={() => expandLongResponse(index, false)} />
                   </div>
                 </div>
               </div>
@@ -151,7 +144,7 @@
                     </Collapse>
                   </div>
                   <div class="col-1">
-                    <button on:click={() => expandLongResponse(index, true)}>X</button>
+                    <Icon name={isOpenInModalMap[index] ? "caret-down-fill" : "caret-right-fill"} onclick={() => expandLongResponse(index, true)} />
                   </div>
                 </div>
               </div>
