@@ -1,7 +1,7 @@
 <script type="ts">
   import { onMount } from "svelte";
 
-  import { Screen, Card } from "../../structure";
+  import { Screen, Card, error, success } from "../../structure";
   import { ReportsAPI } from "../../api/admin";
   import { Likert, ShortLong, SingleMultiple } from "./ProjectReportsSubmissionCharts";
 
@@ -27,12 +27,29 @@
       loading = false;
     }
   }
+
+  const download = async () => {
+    loading = true;
+    try{
+      await ReportsAPI.downloadSubmissionsExport(projectId, moduleId, blockId);
+      success("Success!", "Downloaded the CSV!");
+    }catch(err){
+      error("Uh oh", "Could not download that export.");
+    }finally{
+      loading = false;
+    }
+  }
 </script>
 
 <Screen>
   <div class="row">
     <div class="col-12">
       <Card {loading} title={report && report.blockName ? report.blockName : "Loading..."}>
+        <div class="row">
+          <div class="col-12">
+            <button class="btn btn-link" on:click={download}>Download CSV</button>
+          </div>
+        </div>
         <div class="row">
           {#each report.questions as question}
           <div class="col-6">
