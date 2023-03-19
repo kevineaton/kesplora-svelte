@@ -18,6 +18,8 @@
     Profile,
     Projects,
     ProjectFlowEditor,
+    ProjectReports,
+    ProjectReportsSubmission,
     ProjectUsers,
     Setup,
     Site,
@@ -98,7 +100,9 @@
               <Route path="/admin/users/:userId/projects/:projectId" component={UserProject} />
               <Route path="/admin/site" component={Site} />
               <Route path="/admin/projects" component={Projects} />
+              <Route path="/admin/projects/:projectId" component={ProjectReports} />
               <Route path="/admin/projects/:projectId/flow" component={ProjectFlowEditor} />
+              <Route path="/admin/projects/:projectId/flow/modules/:moduleId/blocks/:blockId/submissions" component={ProjectReportsSubmission} />
               <Route path="/admin/modules" component={Modules} />
               <Route path="/admin/modules/:moduleId/blocks" component={ModuleBlocks} />
               <Route path="/admin/blocks" component={Blocks} />

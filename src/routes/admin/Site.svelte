@@ -29,7 +29,6 @@
       localStorage.setItem("site", JSON.stringify(site));
       success("Saved!", "We have saved the site's information. Users may need to log out and back in to see the changes.")
     } catch (err) {
-      console.log(err);
       error("Uh oh!", "We could not save those changes.");
     }
   }

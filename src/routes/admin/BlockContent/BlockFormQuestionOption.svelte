@@ -23,9 +23,7 @@
   const onEdit = (e: any) => {
     option[e.target.id] = e.target.value;
     option = option;
-    console.log("in option")
     onUpdateOption(option);
-    console.log("here")
   }
 
   const toggleDeleteModal = () => {

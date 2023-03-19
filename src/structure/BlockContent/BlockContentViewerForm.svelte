@@ -111,7 +111,7 @@
       // for v1, we just show the results of the submissions
       if(existingSubmissions.length > 0){
         const s = existingSubmissions[0];
-        lastSubmissionTime = s.submitted;
+        lastSubmissionTime = s.submittedOn;
         for(const question of block.content.questions){
           for(const response of s.responses){
             if(question.id === response.questionId){

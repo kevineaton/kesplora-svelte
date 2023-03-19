@@ -45,7 +45,6 @@
 
   onMount(async () => {
     if($userStore && $userStore.id){
-      console.log($userStore);
       try {
         const partProjResult = await ProjectsAPI.getProject(projectId);
         // if this didn't throw an error, they are already enrolled, so just
@@ -125,8 +124,6 @@
         // TODO: we just redirect to the project
       }
     }catch(err){
-      console.log("error")
-      console.log(err);
       error("Uh oh!", "We could not enroll you. Check your information and try again.");
     }finally{
       loading = false;

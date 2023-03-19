@@ -9,8 +9,9 @@ import {
   DATE_FORMAT_LOCALE_FULL,
   DATE_FORMAT_LOCALE_SHORT
 } from "./dateHelpers";
+import { wordFrequency, defaultEnglishStopWords } from "./words";
 
-export { capFirst, dateToAgo, parseDate, processFlow, translateDate, translateStatus };
+export { capFirst, dateToAgo, parseDate, processFlow, translateDate, translateStatus, wordFrequency, defaultEnglishStopWords };
 
 export {
   DATE_FORMAT_ISO,

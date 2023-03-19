@@ -26,12 +26,10 @@
       formOrder: content.questions.length,
       options: [],
     })
-    console.log(content.questions);
     content = content;
   }
 
   const moveQuestion = (index: number, direction: "up" | "down") => {
-    console.log(`Moving index ${index} ${direction}`)
     let options: any[] = [];
     for(let i = 0; i < content.questions.length; i++){
       // TODO:
@@ -63,7 +61,7 @@
       <Icon name="plus-lg" onclick={addQuestion} class="text-success" style="font-weight:bold; margin-left: 10px;" />
     </div>
   </div>
-  {#each content.questions as question, index}
-    <BlockFormEditQuestion question={question} index={index} />
+  {#each content.questions as question}
+    <BlockFormEditQuestion question={question} />
   {/each}
 </div>

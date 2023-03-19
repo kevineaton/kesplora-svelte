@@ -65,9 +65,6 @@
       return error("Missing Summary", "Summary is required!");
     }
     loading = true;
-    if (newBlockType === "form") {
-      console.log(newBlock);
-    }
     try {
       const result = await BlocksAPI.createBlock(newBlockType, newBlock);
       blocks = [result.body.data, ...blocks];

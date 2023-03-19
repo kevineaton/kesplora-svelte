@@ -24,7 +24,6 @@ export class FilesAPI {
    */
   public uploadFile(fileData: any, options: any = {}){
     options.asMultipartFile = true;
-    console.log(fileData);
     return makeCall("POST", "admin/files", fileData, options);
   }
 

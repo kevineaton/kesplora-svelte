@@ -12,6 +12,8 @@ import ModuleBlocks from "./admin/ModuleBlocks.svelte";
 import Projects from "./admin/Projects.svelte";
 import ProjectFlowEditor from "./admin/ProjectFlowEditor.svelte";
 import ProjectUsers from "./admin/ProjectUsers.svelte";
+import ProjectReports from "./admin/ProjectReports.svelte";
+import ProjectReportsSubmission from "./admin/ProjectReportsSubmission.svelte";
 import Setup from "./admin/Setup.svelte";
 import Site from "./admin/Site.svelte";
 import SiteUsers from "./admin/SiteUsers.svelte";
@@ -26,7 +28,7 @@ import ProjectFlow from "./participant/ProjectFlow.svelte";
 export { Home, Login, MyNotes, Profile };
 
 // admin
-export { Blocks, Files, Modules, ModuleBlocks, Projects, ProjectFlowEditor, ProjectUsers, Setup, Site, SiteUsers, UserProject, UserInformation };
+export { Blocks, Files, Modules, ModuleBlocks, Projects, ProjectFlowEditor, ProjectReports, ProjectReportsSubmission, ProjectUsers, Setup, Site, SiteUsers, UserProject, UserInformation };
 
 // participant
 export { ProjectSummary, ProjectFlow };

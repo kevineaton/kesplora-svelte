@@ -17,7 +17,6 @@
       window.localStorage.setItem("user", JSON.stringify(loginResult.body.data));
       navigate("/", {replace: true });
     }catch(err){
-      console.log(err);
       error("Uh Oh!", "Could not login. Check your information and try again.");
     }
   }

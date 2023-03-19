@@ -37,19 +37,15 @@
   }
 
   const updateOption = (optionToUpdate: any) => {
-    console.log("updating");
-    console.log(optionToUpdate);
     for(let option of question.options){
       if(optionToUpdate.id === option.id){
         option = optionToUpdate;
       }
     }
     question = question;
-    console.log(question.options);
   }
 
   const moveOption = (index: number, direction: "up" | "down") => {
-    console.log(`Moving index ${index} ${direction}`)
     let options: any[] = [];
     for(let i = 0; i < question.options.length; i++){
       // TODO:

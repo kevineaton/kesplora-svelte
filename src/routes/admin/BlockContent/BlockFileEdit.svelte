@@ -5,7 +5,6 @@
   if(!content.fileId){
     content.fileId = 0;
   }
-  console.log(content);
 
   // TODO: file upload here
   let loadingUpload = false;
@@ -13,7 +12,6 @@
   let fileUploadInput; // holds the upload input for clearing
 
   const onFileSelect = (selected: any) => {
-    console.log(selected);
     content.fileId = selected.id;
   }
 

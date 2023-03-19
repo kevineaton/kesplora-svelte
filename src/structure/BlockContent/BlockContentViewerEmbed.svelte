@@ -14,7 +14,6 @@
   if (!content.embedLink && !content.fileId) {
     // TODO: show an error
   }
-  console.log(content);
 
   onMount(async () => {
     if(content.embedType === "internal_pdf" && content.fileId === 0){
