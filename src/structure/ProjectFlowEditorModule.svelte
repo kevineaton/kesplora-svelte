@@ -2,10 +2,10 @@
   import { Icon, Modal, ModalBody, ModalFooter, ModalHeader } from "sveltestrap";
   import { flip } from "svelte/animate";
   import { dndzone } from "svelte-dnd-action";
-  import { BlocksAPI, ModulesAPI } from "../api";
-  import BlockContentViewer from "../routes/BlockContent/BlockContentViewer.svelte";
+  import { BlocksAPI, ModulesAPI } from "../api/admin";
+  import BlockContentViewer from "./BlockContentViewer.svelte";
   import Loading from "./Loading.svelte";
-    import { error, success } from "./Alert";
+  import { error, success } from "./Alert";
 
   const flipDurationMs = 300;
 
@@ -56,6 +56,17 @@
     }
   }
 
+  const changeModuleStatus = async (e: any) => {
+    const status = e.target.value;
+    try{
+      await ModulesAPI.updateModule(module.id, { status });
+      module.status = status;
+      success("Updated", `${module.name} is now ${status}`);
+    }catch(err){
+
+    }
+  }
+
   //
   // dnd handlers
   //
@@ -93,7 +104,9 @@
 <div class="project-flow-editor-module-container">
   <div class="row">
     <div class="col-10">
-      <strong>{module.name}</strong>
+      <strong class={module.status === "disabled" ? "text-danger" : module.status === "pending" ? "text-warning" : ""}>
+        {module.name} {module.status !== "active" ? `(${module.status})` : ""}
+      </strong>
     </div>
     <div class="col-1">
       <Icon name="arrow-clockwise" onclick={refreshBlockList} />
@@ -111,8 +124,15 @@
           Not Loaded
         {:else}
           <div class="row">
-            <div class="col-10 offset-1">
-              <em class="small">In {module.projectsCount} projects</em>
+            <div class="col-5 offset-1">
+              <em>In {module.projectsCount} projects</em>
+            </div>
+            <div class="col-6">
+              <select class="form-control" value={module.status} on:change={changeModuleStatus}>
+                <option value="active">Status: Active</option>
+                <option value="pending">Status: Pending</option>
+                <option value="disabled">Status: Disabled</option>
+              </select>
             </div>
           </div>
 

@@ -48,6 +48,18 @@ export function makeCall(method: string, endpoint: string, data: any = {}, optio
 
   return axios(config)
   .then((res: any) => {
+    // if they asked for a download, we have to do this One Dumb Trick
+    if(options.asDownload){
+      const url = window.URL.createObjectURL(new Blob([res.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      const fileName = options.fileName ? options.fileName : "file";
+      link.setAttribute('download', fileName); //or any other extension
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      res.data = { downloaded: true};
+    }
     return Promise.resolve({
       code: 200,
       body: res.data

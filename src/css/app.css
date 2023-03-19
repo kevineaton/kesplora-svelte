@@ -20,6 +20,10 @@
 
 /** Layout and Grid **/
 
+.overflow {
+  overflow: scroll;
+}
+
 .screen {
   padding-top: 5px;
 }
@@ -51,6 +55,18 @@
   text-align: center;
 }
 
+.text-status-completed {
+  color: rgb(0, 111, 0);
+}
+
+.text-status-not_started {
+  color: rgb(144, 3, 3);
+}
+
+.text-link {
+  cursor: pointer;
+}
+
 
 /** Forms **/
 
@@ -73,6 +89,14 @@ label {
   color: white;
 }
 
+.tab-content .nav-tabs .nav-item .nav-link {
+  color: gray;
+}
+
+.tab-content .nav-tabs .nav-item .nav-link.active {
+  color: black;
+}
+
 
 .drop-target-level-1 {
   outline: rgba(255, 255, 102, .7) dashed 2px !important;
@@ -82,4 +106,18 @@ label {
   outline: rgba(76, 61, 233, 0.7) dashed 2px !important;
   margin-left: 1px;
   margin-right: 1px;
+}
+
+/** Accordion **/
+.flow-module-status-completed > h2 > button{
+  background-color: #ace6bb !important;
+  color: black !important;
+  border-color: #ace6bb !important;
+  box-shadow: none !important;
+}
+
+/** Grid / Table **/
+.icon-table {
+  margin-left: 8px;
+  margin-right: 8px;
 }

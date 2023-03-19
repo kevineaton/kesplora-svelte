@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Link } from "svelte-routing";
+  import { Link } from "svelte-routing";
   import { Icon, Offcanvas } from "sveltestrap";
   import { menuOpenStore, siteStore, userStore } from "../stores";
 
@@ -11,6 +11,9 @@
     isOpen = !isOpen;
     menuOpenStore.set(isOpen); 
   };
+  if(!$siteStore){
+    $siteStore = {name: "Research"};
+  }
   const header = $userStore ? `${$siteStore.name} - ${$userStore.firstName} ${$userStore.lastName}` : "Admin";
 </script>
 
@@ -43,6 +46,14 @@
       <Link to="/admin/blocks">Blocks</Link>
     </div>
   </div>
+  <div class="row menu-row">
+    <div class="col-1 menu-icon">
+      <Icon name="file-earmark-medical" />
+    </div>
+    <div class="col-11 menu-link">
+      <Link to="/admin/files">Files</Link>
+    </div>
+  </div>
 
   <hr class="menu-separator"/>
 
@@ -52,7 +63,7 @@
       <Icon name="person-workspace" />
     </div>
     <div class="col-11 menu-link">
-      <Link to="/admin/projects">Users</Link>
+      <Link to="/admin/users">Users</Link>
     </div>
   </div>
   <div class="row menu-row">
@@ -60,7 +71,15 @@
       <Icon name="clipboard-data" />
     </div>
     <div class="col-11 menu-link">
-      <Link to="/admin/projects">Reports</Link>
+      <Link to="/admin/reports">Reports</Link>
+    </div>
+  </div>
+  <div class="row menu-row">
+    <div class="col-1 menu-icon">
+      <Icon name="globe" />
+    </div>
+    <div class="col-11 menu-link">
+      <Link to="/admin/site">Site</Link>
     </div>
   </div>
 
@@ -71,7 +90,7 @@
       <Icon name="question-circle" />
     </div>
     <div class="col-11 menu-link">
-      <Link to="/admin/modules">Help</Link>
+      <Link to="/admin/help">Help</Link>
     </div>
   </div>
 

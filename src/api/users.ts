@@ -31,4 +31,32 @@ export class UserAPI {
     }
     return makeCall("POST", "logout", data, options);
   }
+
+  /**
+   * Get My Profile
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public getMe(otherData: any = {}, options: any = {}){
+    const data = {
+      ...otherData,
+    }
+    return makeCall("GET", "me", data, options);
+  }
+
+  /**
+   * Update my profile
+   * @param profile 
+   * @param otherData 
+   * @param options 
+   * @returns 
+   */
+  public updateMe(profile: any, otherData: any = {}, options: any = {}){
+    const data = {
+      ...profile,
+      ...otherData,
+    }
+    return makeCall("PATCH", "/me", profile, options);
+  }
 }
