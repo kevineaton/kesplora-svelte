@@ -112,7 +112,7 @@ export function makeCall(method: string, endpoint: string, data: any = {}, optio
  * @param endpoint 
  */
 export function makeUrl(endpoint: string): string {
-  let api = import.meta.env.API || "http://localhost:8080";
+  let api = import.meta.env.VITE_API || "http://localhost:8080";
   // normalize
   if(api.charAt(api.length -1) === "/"){
     api = api.substr(0, api.length - 1);
