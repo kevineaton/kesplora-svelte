@@ -1,4 +1,4 @@
-<script lange="ts">
+<script lang="ts">
   import { Router, Route, navigate } from "svelte-routing";
   import { onMount } from "svelte";
   import { SvelteToast } from "@zerodevx/svelte-toast";
