@@ -1,12 +1,14 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { EmbedPDF, EmbedYoutube } from "..";
+  import { EmbedPDF, EmbedYoutube, error } from "..";
   import { ProjectsAPI } from "../../api/participant";
   import Loading from "../Loading.svelte";
 
   export let content: any;
+  export let asAdmin: boolean = false;
   let loading = true;
   let downloadName = "";
+  
 
   if (!content.embedType) {
     content.embedType = "external_pdf";
@@ -16,19 +18,19 @@
   }
 
   onMount(async () => {
-    if(content.embedType === "internal_pdf" && content.fileId === 0){
-      
+    if(content.embedType === "internal_pdf" && content.fileId === 0){      
       loading = false; // just move on
+    } else if(content.embedType === "youtube"){
+      loading = false; // no call to make
     } else {
       // we need to get the file for things like the download link
       try{
-        const result = await ProjectsAPI.getFileMeta(content.fileId);
-        console.log(result.body.data);
+        const result = await ProjectsAPI.getFileMeta(content.fileId, {}, asAdmin);
         const f = result.body.data;
         downloadName = `${f.display}${f.fileType}`;
         loading = false;
       }catch(err){
-
+        error("Embed Error", "We could not process that embed.")
       }
     }
   })

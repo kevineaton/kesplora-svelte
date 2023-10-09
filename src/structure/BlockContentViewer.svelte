@@ -3,6 +3,7 @@
   import { BlockContentViewerExternal, BlockContentViewerFile, BlockContentViewerEmbed, BlockContentViewerText } from "./BlockContent/index";
   
   export let block;
+  export let asAdmin = false;
 </script>
 
 <div class="content-viewer">
@@ -17,9 +18,9 @@
         {#if block.blockType === "external"}
           <BlockContentViewerExternal content={block.content} />
         {:else if block.blockType === "embed"}
-          <BlockContentViewerEmbed content={block.content} />
+          <BlockContentViewerEmbed content={block.content} asAdmin={asAdmin} />
         {:else if block.blockType === "file"}
-          <BlockContentViewerFile content={block.content} />
+          <BlockContentViewerFile content={block.content} asAdmin={asAdmin} />
         {:else if block.blockType === "text"}
           <BlockContentViewerText content={block.content} />
         {/if}
