@@ -7,6 +7,7 @@
   import { Card, error, Screen, success } from "../../structure";
   import BlockContentViewer from "../../structure/BlockContentViewer.svelte";
   import { Link } from "svelte-routing";
+    import { blockTypeDisplay } from "../../utils/formatters";
 
   export let moduleId;
 
@@ -28,10 +29,23 @@
     try{
       const moduleResult = await ModulesAPI.getModule(moduleId);
       module = moduleResult.body.data;
+
+      // we need to do some processing on the display
       const moduleBlocksResult = await BlocksAPI.getBlocksOnModule(moduleId);
-      blocksInModule = moduleBlocksResult.body.data;
+      const moduleBlocksProcessed: any[] = [];
+      for(const block of moduleBlocksResult.body.data){
+        block.display = blockTypeDisplay(block);
+        moduleBlocksProcessed.push(block);
+      }      
+      blocksInModule = moduleBlocksProcessed;
+
       const allBlocksResult = await BlocksAPI.getBlocks();
-      allBlocks = allBlocksResult.body.data;
+      const allBlocksProcessed: any[] = [];
+      for(const block of allBlocksResult.body.data){
+        block.display = blockTypeDisplay(block);
+        allBlocksProcessed.push(block);
+      }
+      allBlocks = allBlocksProcessed;
       loading = false;
     }catch(err){
       loading = false;
@@ -104,7 +118,11 @@
   <div class="row">
     <div class="col-2">
       <Card title={`${module.name}`}>
-        {module.description}
+        {#if module.description && module.description !== ""}
+          {module.description}
+        {:else}
+          <em>No description provided</em>
+        {/if}
       </Card>
     </div>
     <div class="col-5">
@@ -122,7 +140,7 @@
                 {block.name}
               </div>
               <div class="col-3">
-                {block.blockType}
+                {block.display}
               </div>
               <div class="col-1">
                 <Icon name="clipboard2" class="text-primary" onclick={() => {selectBlockForPreview(block)}} />
@@ -166,7 +184,7 @@
                 {block.name}
               </div>
               <div class="col-3">
-                {block.blockType}
+                {block.display}
               </div>
               <div class="col-1">
                 {block.foundInFlows}
@@ -184,7 +202,7 @@
   <Modal isOpen={showBlockPreview} toggle={togglePreview} size="xl">
     <ModalHeader toggle={togglePreview}>Preview Block</ModalHeader>
     <ModalBody>
-      <BlockContentViewer block={selectedBlock} />
+      <BlockContentViewer block={selectedBlock} asAdmin={true} />
     </ModalBody>
     <ModalFooter>
       <button class="btn btn-block btn-primary" on:click={togglePreview}>Done</button>

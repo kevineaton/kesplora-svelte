@@ -52,6 +52,7 @@
       selectModule(result.body.data);
       showDescriptionEditModal = false;
       showNewModuleModal = false;
+      newModuleName = "";
     }catch(err){
       error("", "Could not create that module. Check your data and try again!");
     } finally {

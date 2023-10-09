@@ -23,3 +23,22 @@ export const capFirst = (input: string): string => {
   }
   return input[0].toUpperCase() + input.substring(1);
 }
+
+export const blockTypeDisplay = (block: any): string => {
+  if(block.blockType && block.blockType !== ""){
+    if(block.blockType === "embed"){
+      if(block.content && block.content.embdedType){
+        if(block.content.embedType === "internal_pdf"){
+          return "PDF";
+        }
+        
+        if(block.content.embedType === "youtube"){
+          return "YouTube";
+        }
+        
+      }
+    }
+    return capFirst(block.blockType);
+  }
+  return "";
+}

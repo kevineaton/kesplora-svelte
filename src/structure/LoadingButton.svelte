@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Spinner } from "sveltestrap";
   import Loading from "./Loading.svelte";
   
   export let loading: boolean = false;
