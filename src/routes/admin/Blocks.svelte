@@ -39,7 +39,14 @@
     try {
       loading = true;
       const result = await BlocksAPI.getBlocks();
-      blocks = result.body.data;
+      const blocksProcessing: any[] = [];
+      for(const b of result.body.data){
+        b.display = blockTypeDisplay(b);
+        b.summaryDisplay = b.summary.length > 26 ? `${b.summary.substring(0, 26)}...` : b.summary;
+        blocksProcessing.push(b);
+      }
+      
+      blocks = blocksProcessing;
       loading = false;
     } catch (err) {}
   });
@@ -151,9 +158,13 @@
   <div class="row">
     <div class="col-3">
       <Card title="About Blocks">
-        Blocks are the individual pieces of content in a research project. These
+        <p>Blocks are the individual pieces of content in a research project. These
         can include surveys, presentations, and external links. Blocks are
-        placed in modules and then modules are combined into projects.
+        placed in modules and then modules are combined into projects.</p>
+
+        <button class="btn btn-block btn-primary" on:click={toggleNewBlockModal}
+          >New</button
+        >
       </Card>
     </div>
     <div class="col-9">
@@ -162,23 +173,23 @@
           <strong>No Blocks available.</strong>
         {:else}
           <div class="row row-header project-list-row">
-            <div class="col-2">Name</div>
+            <div class="col-3">Name</div>
             <div class="col-2">Type</div>
-            <div class="col-4">Summary</div>
+            <div class="col-3">Summary</div>
             <div class="col-2">In Modules</div>
             <div class="col-1" />
             <div class="col-1" />
           </div>
           {#each blocks as block (block.id)}
             <div class="row project-list-row">
-              <div class="col-2">
+              <div class="col-3">
                 {block.name}
               </div>
               <div class="col-2">
-                {block.blockType}
+                {block.display}
               </div>
-              <div class="col-4">
-                {block.summary}
+              <div class="col-3">
+                {block.summaryDisplay}
               </div>
               <div class="col-2">
                 {block.foundInFlows}
@@ -196,9 +207,6 @@
             </div>
           {/each}
         {/if}
-        <button class="btn btn-block btn-primary" on:click={toggleNewBlockModal}
-          >New</button
-        >
       </Card>
     </div>
   </div>
