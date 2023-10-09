@@ -16,6 +16,7 @@
     BlockEmbedEdit,
     BlockTextEdit,
   } from "./BlockContent";
+    import { blockTypeDisplay } from "../../utils/formatters";
 
   export const location: any = null;
 
@@ -61,12 +62,10 @@
     if (newBlock.name === "") {
       return error("Missing Name", "Name is required!");
     }
-    if (newBlock.summary === "") {
-      return error("Missing Summary", "Summary is required!");
-    }
     loading = true;
     try {
       const result = await BlocksAPI.createBlock(newBlockType, newBlock);
+      result.body.data.display = blockTypeDisplay(result.body.data);
       blocks = [result.body.data, ...blocks];
       showNewBlockModal = false;
       newBlock = {
@@ -264,7 +263,7 @@
     </ModalBody>
     <ModalFooter>
       <button class="btn btn-block btn-primary" on:click={createBlock}
-        >Create Module</button
+        >Create Block</button
       >
     </ModalFooter>
   </Modal>

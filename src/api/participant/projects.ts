@@ -149,30 +149,35 @@ export class ProjectsAPI {
    * @param fileId 
    * @param fileName 
    * @param queryData 
+   * @param asAdmin needed as an override for block previews
    * @param options 
    * @returns 
    */
-  public downloadFileBinary(fileId: number, fileName: string = "file", format: string = "binary", queryData: any = {}, options: any = {}){
+  public downloadFileBinary(fileId: number, fileName: string = "file", format: string = "binary", queryData: any = {}, asAdmin: boolean = false, options: any = {}){
     if(format === "base64"){
       queryData.format = format;
     } else {
       options.asDownload = true;
       options.fileName = fileName;
     }
-    return makeCall("GET", `participant/files/${fileId}/download`, queryData, options);
+    const target = asAdmin ? "admin" : "participant";
+    return makeCall("GET", `${target}/files/${fileId}/download`, queryData, options);
   }
 
   /**
    * Gets the file metadata
    * @param fileId 
    * @param metaData 
+   * @param asAdmin needed as an override for block previews
    * @param options 
    * @returns 
    */
-  public getFileMeta(fileId, metaData: any = {}, options: any = {}){
+  public getFileMeta(fileId, metaData: any = {}, asAdmin: boolean = false, options: any = {}){
     const data = {
       ...metaData,
     }
-    return makeCall("GET", `participant/files/${fileId}`, data, options);
+
+    const target = asAdmin ? "admin" : "participant";
+    return makeCall("GET", `${target}/files/${fileId}`, data, options);
   }
 }

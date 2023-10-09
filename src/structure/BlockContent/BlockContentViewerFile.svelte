@@ -6,6 +6,7 @@
 
 
   export let content: any;
+  export let asAdmin: boolean = false;
   let loading = true;
   let file: any;
   let errorMessage: string = "";
@@ -18,7 +19,7 @@
     // we need to get the file meta data so we can properly let the
     // user know about it
     try{
-      const result = await ProjectsAPI.getFileMeta(content.fileId);
+      const result = await ProjectsAPI.getFileMeta(content.fileId, {}, asAdmin);
       file = result.body.data;
       file.fileName = `${file.display}${file.fileType}`;
     }catch(err){

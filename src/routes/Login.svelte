@@ -5,19 +5,24 @@
   import Card from "../structure/Card.svelte";
   import { navigate } from "svelte-routing";
   import { error } from "../structure";
+  import LoadingButton from "../structure/LoadingButton.svelte";
 
 
   let email: string = "";
   let password: string = "";
+  let loading: boolean = false;
 
   const login = async () => {
     try{
+      loading = true;
       const loginResult = await UsersAPI.login(email, password);
       userStore.set(loginResult.body.data);
       window.localStorage.setItem("user", JSON.stringify(loginResult.body.data));
+      loading = false;
       navigate("/", {replace: true });
     }catch(err){
       error("Uh Oh!", "Could not login. Check your information and try again.");
+      loading = false;
     }
   }
 </script>
@@ -41,7 +46,7 @@
             <input bind:value={password} id="password" type="password" class="form-control" placeholder="Password" />
           </div>
           <div class="form-group">
-            <button class="btn btn-block btn-primary" on:click|preventDefault={login}>Login</button>
+            <LoadingButton classes="btn btn-block btn-primary" onClick={login} loading={loading}>Login</LoadingButton>
           </div>
         </Card>
       </div>
