@@ -49,6 +49,7 @@
   // with the participant's status
   const selectBlock = async (block) => {
     try{
+      loading = true;
       const result = await ProjectsAPI.getProjectModuleBlock(projectId, block.moduleId, block.id);
       // since we received it, mark it as started if it isn't already
       let sb = result.body.data;
@@ -73,6 +74,8 @@
       
     }catch(err){
       console.log(err);
+    } finally{
+      loading = false;
     }
   }
 
