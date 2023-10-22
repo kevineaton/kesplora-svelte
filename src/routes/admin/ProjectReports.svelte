@@ -70,8 +70,8 @@
       total: 0
     };
     data.map((entry) => {
-      mapping[entry.value]++;
-      mapping.total++;
+      mapping[entry.value] = entry.count;
+      mapping.total += entry.count;
     })
     return {
       labels: ["Started", "Not Started", "Completed"],
@@ -192,7 +192,7 @@
             <strong>{project.name}</strong>
           </div>
           <div class="col-4">
-            {project.totalUsers} total participants
+            {project.participantCount} total participants
           </div>
           <div class="col-2">
             <button class="btn btn-block btn-primary" on:click={refresh}>Refresh</button>
