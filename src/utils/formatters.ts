@@ -27,7 +27,7 @@ export const capFirst = (input: string): string => {
 export const blockTypeDisplay = (block: any): string => {
   if(block.blockType && block.blockType !== ""){
     if(block.blockType === "embed"){
-      if(block.content && block.content.embdedType){
+      if(block.content && block.content.embedType){
         if(block.content.embedType === "internal_pdf"){
           return "PDF";
         }
